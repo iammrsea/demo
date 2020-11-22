@@ -8,6 +8,7 @@
 import Env from '@ioc:Adonis/Core/Env'
 import { OrmConfig } from '@ioc:Adonis/Lucid/Orm'
 import { DatabaseConfig } from '@ioc:Adonis/Lucid/Database'
+import  Application  from '@ioc:Adonis/Core/Application';
 
 const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
   /*
@@ -36,15 +37,31 @@ const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
     */
     pg: {
       client: 'pg',
-      connection: {
+   //  connection: !Application.inProduction
+      //   ? Env.get("DATABASE_URL") + "?ssl=no-verify"
+      //   : {
+      //       host: Env.get("DB_HOST", "127.0.0.1") as string,
+      //       port: Number(Env.get("DB_PORT", 5432)),
+      //       user: Env.get("DB_USER", "lucid") as string,
+      //       password: Env.get("DB_PASSWORD", "lucid") as string,
+      //       database: Env.get("DB_NAME", "lucid") as string,
+      //     },
+      connection: Application.inProduction ?
+      Env.get('DATABASE_URL') + "?ssl=no-verify":
+      {
         host: Env.get('PG_HOST'),
         port: Env.get('PG_PORT'),
         user: Env.get('PG_USER'),
         password: Env.get('PG_PASSWORD', ''),
         database: Env.get('PG_DB_NAME'),
       },
-      healthCheck: false,
-			debug: false,
+    
+      healthCheck: Application.inDev,
+			debug: Application.inDev,
+    },
+    custom: {
+      client: "pg",
+      connection: Env.get("DATABASE_URL") + "?ssl=no-verify",
     },
 
   },
