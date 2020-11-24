@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add phc-argon2
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js cache list
 
 PATH: 
-  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\usr\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files\Java\jdk-12.0.2\bin;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Users\usr\AppData\Roaming\Composer\vendor\bin;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Yarn\bin;C:\Users\usr\AppData\Local\Android\Sdk\platform-tools;C:\Program Files (x86)\sbt\bin;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Heroku\bin;C:\Users\usr\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\usr\AppData\Roaming\Composer\vendor\bin;C:\Program Files\JetBrains\PhpStorm 2019.2.4\bin;C:\Users\usr\AppData\Roaming\npm;C:\Program Files (x86)\Yarn\bin;C:\Users\usr\AppData\Local\Yarn\bin;C:\Users\usr\anaconda3;C:\Users\usr\anaconda3\Scripts;C:\Program Files\JetBrains\PyCharm Community Edition 2020.1.1\bin;C:\Users\usr\anaconda3\Library\bin;C:\Program Files\MongoDB\Server\4.0\bin;C:\Program Files\PostgreSQL\12\bin;C:\Program Files (x86)\sbt\bin;C:\Users\usr\AppData\Local\Microsoft\WindowsApps
+  C:\Users\usr\anaconda3;C:\Users\usr\anaconda3\Library\mingw-w64\bin;C:\Users\usr\anaconda3\Library\usr\bin;C:\Users\usr\anaconda3\Library\bin;C:\Users\usr\anaconda3\Scripts;C:\Users\usr\anaconda3\bin;C:\Users\usr\anaconda3\Scripts\condabin;C:\Users\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\usr\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files\Java\jdk-12.0.2\bin;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Users\usr\AppData\Roaming\Composer\vendor\bin;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Yarn\bin;C:\Users\usr\AppData\Local\Android\Sdk\platform-tools;C:\Program Files (x86)\sbt\bin;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Heroku\bin;C:\Users\usr\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\usr\AppData\Roaming\Composer\vendor\bin;C:\Program Files\JetBrains\PhpStorm 2019.2.4\bin;C:\Users\usr\AppData\Roaming\npm;C:\Program Files (x86)\Yarn\bin;C:\Users\usr\AppData\Local\Yarn\bin;C:\Users\usr\anaconda3;C:\Users\usr\anaconda3\Scripts;C:\Program Files\JetBrains\PyCharm Community Edition 2020.1.1\bin;C:\Users\usr\anaconda3\Library\bin;C:\Program Files\MongoDB\Server\4.0\bin;C:\Program Files\PostgreSQL\12\bin;C:\Program Files (x86)\sbt\bin;C:\Users\usr\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
   1.21.1
@@ -14,8 +14,12 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com
-      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:60:26)
+  Invariant Violation: There should only be one folder in a package cache (got  in C:\Users\usr\AppData\Local\Yarn\Cache\v6\npm-@adonisjs-ace-6.9.3-13723e149b3d00ea2db0a458b7320c66500edf5e-integrity\node_modules\@adonisjs)
+      at invariant (C:\Program Files (x86)\Yarn\lib\cli.js:2314:15)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:59801:11
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files (x86)\Yarn\lib\cli.js:310:30)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:321:13
 
 npm manifest: 
   {

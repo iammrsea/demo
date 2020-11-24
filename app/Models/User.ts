@@ -4,7 +4,11 @@ import {
   column,
   beforeSave,
   BaseModel,
+  hasOne,
+  HasOne,
 } from '@ioc:Adonis/Lucid/Orm'
+import Rider from './Rider'
+import Driver from './Driver'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -22,8 +26,14 @@ export default class User extends BaseModel {
   @column({ serializeAs: null })
   public password: string
 
-  @column()
+  @column({ serializeAs: null })
   public rememberMeToken?: string
+
+  @hasOne(() => Rider, { serializeAs: 'profile' })
+  public rider: HasOne<typeof Rider>;
+
+  @hasOne(() => Driver, { serializeAs: 'profile' })
+  public driver: HasOne<typeof Driver>;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -32,7 +42,7 @@ export default class User extends BaseModel {
   public updatedAt: DateTime
 
   @beforeSave()
-  public static async hashPassword (user: User) {
+  public static async hashPassword(user: User) {
     if (user.$dirty.password) {
       user.password = await Hash.make(user.password)
     }

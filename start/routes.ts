@@ -13,8 +13,12 @@ import {
 
 //Health route
 Route.get("health", async ({ response }: HttpContextContract) => {
-  const report = await HealthCheck.getReport();
+  try {
+    const report = await HealthCheck.getReport();
   return report.healthy ? response.ok(report) : response.badRequest(report);
+  } catch (error) {
+    throw error
+  }
 });
 //Home route
 Route.get("/", async ({ response }: HttpContextContract) => {
