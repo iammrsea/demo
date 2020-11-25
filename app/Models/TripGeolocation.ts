@@ -1,30 +1,18 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Image extends BaseModel {
+export default class TripGeolocation extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public url: string;
+  public latitude: string;
 
   @column()
-  public fileId: string;
-
-  @column({ serializeAs: null })
-  public driverId: number;
+  public longitude: string;
 
   @column()
-  public tripVehicleSpecId: number;
-
-  @column()
-  public thumbnailUrl?: string;
-
-  @column()
-  public description?: string;
-
-  @column()
-  public documentType?: string;
+  public tripId: number;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

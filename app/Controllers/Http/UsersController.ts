@@ -8,6 +8,7 @@ import CustomErrorException from 'App/Exceptions/CustomErrorException'
 import { messages, USERS_FOLDER, DRIVERS_DOCUMENT_FOLDER } from '../../../utils'
 import User from 'App/Models/User'
 import ProfileImage from 'App/Models/ProfileImage'
+import DriverService from '../../../services/DriverService'
 
 
 export default class UsersController {
@@ -218,6 +219,53 @@ export default class UsersController {
             throw error
         }
     }
+    public async online(ctx: HttpContextContract) {
+        try {
+            const { auth } = ctx;
+            const user = auth.user;
+            const location = await this.validateOnlineData(ctx);
+            return DriverService.goOnline(user!, location)
+        } catch (error) {
+            throw error
+        }
+    }
+    public async offline(ctx: HttpContextContract) {
+        try {
+            const { auth } = ctx;
+            const user = auth.user;
+            return DriverService.goOffline(user!)
+        } catch (error) {
+            throw error
+        }
+    }
+    public async tricyclesOnline() {
+        try {
+            return DriverService.tricycleOnline();
+        } catch (error) {
+            throw error
+        }
+    }
+    public async tricyclesIntransit() {
+        try {
+            return DriverService.tricycleIntransit()
+        } catch (error) {
+            throw error
+        }
+    }
+    public async bikesOnline() {
+        try {
+            return DriverService.bikeOnline();
+        } catch (error) {
+            throw error
+        }
+    }
+    public async bikesIntransit() {
+        try {
+            return DriverService.bikeIntransit()
+        } catch (error) {
+            throw error
+        }
+    }
     private async changeDriverPhoto(
         user: User,
         url: string,
@@ -387,6 +435,16 @@ export default class UsersController {
                 state: schema.string({ trim: true }),
                 lga: schema.string({ trim: true }),
                 homeAddress: schema.string({ trim: true })
+            }),
+            messages
+        })
+    }
+    private validateOnlineData(ctx: HttpContextContract) {
+        return ctx.request.validate({
+            schema: schema.create({
+                latitude: schema.string({ trim: true }),
+                longitude: schema.string({ trim: true }),
+                address: schema.string.optional({ trim: true }),
             }),
             messages
         })
