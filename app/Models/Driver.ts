@@ -1,10 +1,11 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasMany, hasMany, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column, HasMany, hasMany, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Image from './Image';
 import Address from './Address';
 import Vehicle from './Vehicle';
-import { CherryPick } from "@ioc:Adonis/Lucid/Model";
+// import { CherryPick } from "@ioc:Adonis/Lucid/Model";
 import ProfileImage from './ProfileImage';
+import User from './User';
 
 export default class Driver extends BaseModel {
   @column({ isPrimary: true })
@@ -43,23 +44,26 @@ export default class Driver extends BaseModel {
   @hasOne(() => ProfileImage)
   public profilePicture: HasOne<typeof ProfileImage>;
 
+  @belongsTo(() => User)
+  public userData: BelongsTo<typeof User>;
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  public serialize(cheryPick?: CherryPick) {
-    try {
-      // console.log('this', this)
-      return {
-        ...this.serializeAttributes(cheryPick?.fields, false),
-        ...this.serializeRelations(cheryPick?.relations, false),
-        ...this.serializeComputed(cheryPick?.fields),
-      };
-    } catch (error) {
-      console.log('error', error.response)
-      throw error
-    }
-  }
+  // public serialize(cheryPick?: CherryPick) {
+  //   try {
+  //     // console.log('this', this)
+  //     return {
+  //       ...this.serializeAttributes(cheryPick?.fields, false),
+  //       ...this.serializeRelations(cheryPick?.relations, false),
+  //       ...this.serializeComputed(cheryPick?.fields),
+  //     };
+  //   } catch (error) {
+  //     console.log('error', error.response)
+  //     throw error
+  //   }
+  // }
 }

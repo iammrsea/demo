@@ -14,6 +14,15 @@ export default class OnlineBike extends BaseModel {
   @column()
   public driverId: number
 
+  @column()
+  public isOnline: boolean;
+
+  @column()
+  public rejectedTripId: number;
+
+  @column({ serializeAs: null })
+  public tripId: number;
+
   @hasOne(() => OnlineVehicleGeolocation)
   public geolocation: HasOne<typeof OnlineVehicleGeolocation>;
 

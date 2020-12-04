@@ -15,6 +15,10 @@ export default class Trips extends BaseSchema {
       table.dateTime('started_at');
       table.dateTime('ended_at');
       table.string('lasted_for');
+      table.dateTime('accepted_at');
+      table.integer('rejections');
+      table.integer('number_of_matches');
+      table.boolean('previously_rejected').defaultTo(false);
       table.timestamps(true)
     })
   }

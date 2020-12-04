@@ -15,6 +15,15 @@ export default class OnlineTricycle extends BaseModel {
   public driverId: number;
 
   @column()
+  public isOnline: boolean;
+
+  @column()
+  public rejectedTripId: number;
+
+  @column({ serializeAs: null })
+  public tripId: number;
+
+  @column()
   public availableSeats: number
 
   @hasOne(() => OnlineVehicleGeolocation)

@@ -7,6 +7,7 @@ export const messages = {
   minLength: "The cart must have a minimum of {{options.minLength}} items",
   enum: "The value of {{field}} must be one of {{ options.choices }}",
   size: "The file size must be under {{options.size}}",
+  number: 'The {{field}} param/field must be a number',
   extnames: "The file must have one of {{ options.extnames }} extension names",
 };
 

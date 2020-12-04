@@ -1,12 +1,13 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import ProfileImage from './ProfileImage';
+import User from './User';
 
 export default class Rider extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-  @column({serializeAs:null})
+  @column({ serializeAs: null })
   public userId: number;
 
   @column()
@@ -26,7 +27,10 @@ export default class Rider extends BaseModel {
 
   @hasOne(() => ProfileImage)
   public profilePicture: HasOne<typeof ProfileImage>;
-  
+
+  @belongsTo(() => User)
+  public userData: BelongsTo<typeof User>;
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

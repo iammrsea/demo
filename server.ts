@@ -16,6 +16,15 @@ import { Ignitor } from '@adonisjs/core/build/standalone'
 
 sourceMapSupport.install({ handleUncaughtExceptions: false })
 
+process.on('unhandledRejection', (error, p) => {
+  console.log('project rejection warning')
+  console.log('=== UNHANDLED REJECTION ===');
+  console.log('p', p)
+  //@ts-ignore
+  console.dir(error.stack);
+});
+
 new Ignitor(__dirname)
   .httpServer()
   .start()
+

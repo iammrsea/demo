@@ -1,5 +1,5 @@
 export default interface Geolocation {
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     address?: string;
 }

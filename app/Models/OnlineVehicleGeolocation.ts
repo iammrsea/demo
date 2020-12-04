@@ -1,15 +1,16 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+// import { CherryPick } from '@ioc:Adonis/Lucid/Model';
 
 export default class OnlineVehicleGeolocation extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public latitude: string;
+  public latitude: number;
 
   @column()
-  public longitude: string;
+  public longitude: number;
 
   @column()
   public onlineBikeId: number;
@@ -25,4 +26,12 @@ export default class OnlineVehicleGeolocation extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  public serialize() {
+    return {
+      latitude: +this.latitude, longitude: +this.longitude,
+      address: this.address
+    };
+
+  }
 }

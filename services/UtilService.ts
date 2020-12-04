@@ -2,30 +2,44 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import { schema, rules } from '@ioc:Adonis/Core/Validator';
 import { messages } from "../utils";
 import ImageService from './ImageService';
+import _ from 'lodash';
 
-class UtilService{
-    public validateIdParam({request,params}: HttpContextContract,tableName:string) {
+class UtilService {
+    public validateIdParam({ request, params }: HttpContextContract, tableName: string) {
         return request.validate({
             schema: schema.create({
-                id: schema.number([rules.exists({table: tableName,column:'id'})])
+                id: schema.number([rules.exists({ table: tableName, column: 'id' })])
             }),
             data: { id: params.id },
             messages
         })
     }
     public async savePhoto(photo: any, folder: string) {
-         try {
-             const tmpPath = photo.tmpPath as string;
-        const fileName = photo.clientName;
-        const { thumbnailUrl, fileId, url } = await ImageService.saveImage(
-            tmpPath,
-            fileName,
-            folder
-        );
-        return { thumbnailUrl, fileId, url };
-         } catch (error) {
-             throw error;   
-         }
+        try {
+            const tmpPath = photo.tmpPath as string;
+            const fileName = photo.clientName;
+            const { thumbnailUrl, fileId, url } = await ImageService.saveImage(
+                tmpPath,
+                fileName,
+                folder
+            );
+            return { thumbnailUrl, fileId, url };
+        } catch (error) {
+            throw error;
+        }
+    }
+    public toSnakeCase(arg: string | object) {
+        if (typeof arg === 'string') {
+            return _.snakeCase(arg);
+        }
+        if (typeof arg === 'object') {
+            const obj = {};
+            Object.keys(arg).forEach(key => {
+                obj[_.snakeCase(key)] = arg[key];
+            })
+            return obj;
+        }
+        throw new TypeError('Can only accept a string or object data type');
     }
     // public searchNews(page:number,limit:number,searchTerm) {
     //     const sql =
@@ -54,7 +68,7 @@ class UtilService{
     //     .withCount('suggestions')
     //     .orderBy('updated_at','desc')
     //     .paginate(page, limit);
-            
+
     // }
 }
 export default new UtilService();

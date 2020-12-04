@@ -1,27 +1,31 @@
 import OnlineBike from "App/Models/OnlineBike";
 import OnlineTricycle from "App/Models/OnlineTricycle";
 import User from "App/Models/User";
-import Geolocation from "Contracts/Geolocation";
 
 class DriverService {
 
-    public async goOnline(user: User, location: Geolocation) {
+    public async goOnline(user: User, location: any) {
         try {
             await user.preload('driver', driver => {
                 driver.preload('vehicle')
             });
+            const { driver } = user;
             switch (user.driver.vehicle.vehicleType) {
                 case 'bike':
-                    const bike = new OnlineBike();
-                    bike.driverId = user.driver.id;
-                    bike.inTransit = false;
-                    return bike.related('geolocation').create(location);
+                    const bike = await OnlineBike.updateOrCreate({ driverId: driver.id }, {
+                        inTransit: false,
+                        driverId: driver.id,
+                        isOnline: true
+                    });
+                    return bike.related('geolocation').updateOrCreate({}, location);
                 case 'keke':
-                    const tricycle = new OnlineTricycle();
-                    tricycle.driverId = user.driver.id;
-                    tricycle.inTransit = false;
-                    tricycle.availableSeats = 4;
-                    return tricycle.related('geolocation').create(location);
+                    const tricycle = await OnlineTricycle.updateOrCreate({ driverId: driver.id }, {
+                        inTransit: false,
+                        driverId: driver.id,
+                        isOnline: true,
+                        availableSeats: 4
+                    })
+                    return tricycle.related('geolocation').updateOrCreate({}, location);
                 default:
                     return;
             }
@@ -35,10 +39,12 @@ class DriverService {
             switch (user.driver.vehicle.vehicleType) {
                 case 'bike':
                     const bike = await OnlineBike.findByOrFail('driver_id', user.driver.id);
-                    return bike.delete();
+                    bike.isOnline = false;
+                    return bike.save();
                 case 'keke':
                     const tricycle = await OnlineTricycle.findByOrFail('driver_id', user.driver.id);
-                    return tricycle.delete();
+                    tricycle.isOnline = false;
+                    return tricycle.save();
                 default:
                     return;
             }
@@ -48,28 +54,34 @@ class DriverService {
         }
     }
     public tricycleOnline() {
-        return OnlineTricycle.query()
-            .preload('driver')
-            .preload('trip')
-            .preload('geolocation');
+        return this.tricycles();
     }
     public tricycleIntransit() {
-        return OnlineTricycle.query()
-            .where('in_transit', true)
-            .preload('driver')
-            .preload('trip')
-            .preload('geolocation')
+        return this.tricycles(true)
     }
     public bikeOnline() {
-        return OnlineBike.query()
-            .preload('driver')
+        return this.bikes()
+    }
+    public bikeIntransit() {
+        return this.bikes(true)
+    }
+    private bikes(inTransit?: boolean) {
+        const query = OnlineBike.query()
+            .where('is_online', true);
+        if (inTransit) {
+            query.where('in_transit', inTransit);
+        }
+        return query.preload('driver', driver => driver.preload('vehicle'))
             .preload('geolocation')
             .preload('trip');
     }
-    public bikeIntransit() {
-        return OnlineBike.query()
-            .where('in_transit', true)
-            .preload('driver')
+    private tricycles(inTransit?: boolean) {
+        const query = OnlineTricycle.query()
+            .where('is_online', true);
+        if (inTransit) {
+            query.where('in_transit', inTransit);
+        }
+        return query.preload('driver', driver => driver.preload('vehicle'))
             .preload('geolocation')
             .preload('trip');
     }

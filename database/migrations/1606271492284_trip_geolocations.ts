@@ -6,8 +6,10 @@ export default class TripGeolocations extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.string('latitude');
-      table.string('longitude');
+      table.float('from_latitude');
+      table.float('from_longitude');
+      table.float('to_latitude');
+      table.float('to_longitude');
       table.integer('trip_id').references('id').inTable('trips').onDelete('CASCADE').onUpdate('CASCADE')
       table.timestamps(true)
     })

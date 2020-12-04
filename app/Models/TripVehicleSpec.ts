@@ -7,16 +7,16 @@ export default class TripVehicleSpec extends BaseModel {
   public id: number
 
   @column()
-  public isCarriage: boolean;
+  public isCarriage?: boolean;
 
   @column()
-  public isCharter: boolean;
+  public isCharter?: boolean;
 
   @column()
-  public numberOfSeats: number;
+  public numberOfSeats?: number;
 
   @column()
-  public vehicleType: number;
+  public vehicleType: string;
 
   @column()
   public tripId: number;

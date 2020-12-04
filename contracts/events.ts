@@ -5,6 +5,8 @@
  * file.
  */
 
+import Trip from "App/Models/Trip";
+
 declare module '@ioc:Adonis/Core/Event' {
   /*
   |--------------------------------------------------------------------------
@@ -26,5 +28,9 @@ declare module '@ioc:Adonis/Core/Event' {
   |
   */
   interface EventsList {
+    "iterate:trip:request:matching": number;
+    "trip:maximum:rejections": Trip;
+    "trip:accepted": Trip;
+    'trip:driver:matched': any
   }
 }

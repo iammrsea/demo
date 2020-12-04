@@ -9,13 +9,16 @@ import {
   docRoutes,
   factoryRoutes,
   imageRoutes,
+  tripRoutes,
+  riderRoutes,
+  driverRoutes,
 } from "./Routes/index";
 
 //Health route
 Route.get("health", async ({ response }: HttpContextContract) => {
   try {
     const report = await HealthCheck.getReport();
-  return report.healthy ? response.ok(report) : response.badRequest(report);
+    return report.healthy ? response.ok(report) : response.badRequest(report);
   } catch (error) {
     throw error
   }
@@ -29,6 +32,9 @@ Route.group(() => {
   userRoutes();
   tokenRoutes();
   imageRoutes();
+  tripRoutes();
+  riderRoutes();
+  driverRoutes();
   factoryRoutes();
   docRoutes();
 }).prefix("api/v1");

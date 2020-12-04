@@ -6,10 +6,16 @@ export default class TripGeolocation extends BaseModel {
   public id: number
 
   @column()
-  public latitude: string;
+  public fromLatitude: number;
 
   @column()
-  public longitude: string;
+  public toLatitude: number;
+
+  @column()
+  public fromLongitude: number;
+
+  @column()
+  public toLongitude: number;
 
   @column()
   public tripId: number;
@@ -19,4 +25,11 @@ export default class TripGeolocation extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  public serialize() {
+    return {
+      fromLocation: { latitude: this.fromLatitude, longitude: this.fromLongitude },
+      toLocation: { latitude: this.toLatitude, longitude: this.toLongitude }
+    }
+  }
 }
