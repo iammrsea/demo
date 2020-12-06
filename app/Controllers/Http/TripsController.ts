@@ -144,20 +144,15 @@ export default class TripsController {
     }
     public async cancelTrip(ctx: HttpContextContract) {
         try {
-            // const { auth } = ctx;
-            // const user = auth.user;
-            // await user!.preload('driver');
             const { id } = await UtilService.validateIdParam(ctx, 'trips');
-            return TripService.cancelTrip(id);
+            const { reason } = await this.validateTripCancelation(ctx);
+            return TripService.cancelTrip(id, reason);
         } catch (error) {
             throw error
         }
     }
     public async startTrip(ctx: HttpContextContract) {
         try {
-            // const { auth } = ctx;
-            // const user = auth.user;
-            // await user!.preload('driver');
             const { id } = await UtilService.validateIdParam(ctx, 'trips');
             return TripService.startTrip(id);
         } catch (error) {
@@ -196,11 +191,12 @@ export default class TripsController {
                 }),
                 vehicleSpecs: schema.object().members({
                     vehicleType: schema.enum(['keke', 'bike']),
-                    numberOfSeats: schema.number.optional([
-                        rules.requiredWhen('vehicleType', '=', 'keke')
-                    ]),
+
                     isCharter: schema.boolean.optional([
                         rules.requiredWhen('vehicleType', '=', 'keke')
+                    ]),
+                    numberOfSeats: schema.number.optional([
+                        rules.requiredWhen('isCharter', '=', false)
                     ]),
                     isCarriage: schema.boolean.optional([
                         rules.requiredWhen('vehicleType', '=', 'keke')
@@ -216,6 +212,13 @@ export default class TripsController {
                 })
             }),
             messages
+        })
+    }
+    private validateTripCancelation(ctx: HttpContextContract) {
+        return ctx.request.validate({
+            schema: schema.create({
+                reason: schema.string({ trim: true })
+            })
         })
     }
     public validateDriverPick(ctx: HttpContextContract) {

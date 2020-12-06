@@ -15,7 +15,7 @@ export default class Vehicle extends BaseModel {
   @column()
   public plateNumber: string;
 
-  @column()
+  @column({ serializeAs: null })
   public driverId: number;
 
   @column()

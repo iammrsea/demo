@@ -1,11 +1,10 @@
 import Event from '@ioc:Adonis/Core/Event';
 import Database from "@ioc:Adonis/Lucid/Database";
+import CustomErrorException from 'App/Exceptions/CustomErrorException';
 import OnlineBike from "App/Models/OnlineBike";
 import OnlineTricycle from "App/Models/OnlineTricycle";
 import Trip from "App/Models/Trip";
 import Geolocation from "Contracts/Geolocation";
-// import Vehicle from "App/Models/Vehicle";
-// import TripVehicleSpec from "App/Models/TripVehicleSpec";
 import MatchVehicle from "Contracts/MatchVehicles";
 import { DateTime } from 'luxon'
 import GeoService from "./GeoService";
@@ -69,6 +68,18 @@ class TripService {
     public async matchNearestDriver(destination: Geolocation, tripId: number) {
         try {
             const nearestDrivers = await this.matchTripRequestToDrivers(tripId);
+            // console.log('nearest drivers the second', nearestDrivers)
+            //Update trip
+            const trip = await Trip.findOrFail(tripId);
+            if (!trip.numberOfMatches) {
+                if (nearestDrivers.length > 3) {
+                    trip.numberOfMatches = 3;
+                } else {
+                    trip.numberOfMatches = nearestDrivers.length;
+                }
+                await trip.save();
+            }
+
             const nearestDriver = GeoService.nearestVehicle(destination, 1, nearestDrivers);
             //Check if driver's distance meets the threshold distance from rider;
             //If it meets the threshold, serialize the payload and notify the driver
@@ -96,22 +107,26 @@ class TripService {
     public async acceptTripRequest(tripId: number, driverId: number) {
         try {
             const trip = await Trip.query().where('id', tripId)
+                .preload('status')
                 .preload('vehicleSpecs').firstOrFail();
-
-            //Check if trip has already been accepted by another driver
-            // if (trip.isAccepted)
-            //     return this.tripAlreadyAccepted(trip, driverId)
-
+            // Check if trip has already been accepted by another driver
+            if (trip.acceptedAt || trip.status.status === 'intransit') {
+                throw new CustomErrorException('Trip has already been accepted by another driver', 400)
+            }
+            if (trip.status.status === 'canceled') {
+                //Notify the driver that the rider has canceled the trip;
+                return { trip_id: trip.id, is_canceled: true, success: false };
+            }
             //Open a database transaction
             const trx = await Database.transaction();
             trip.driverId = driverId;
-            const { vehicleSpecs: { vehicleType, numberOfSeats } } = trip;
+            const { vehicleSpecs: { vehicleType, numberOfSeats, isCharter } } = trip;
             switch (vehicleType) {
                 case 'bike':
                     await this.updateOnlineBike(driverId, trx, tripId);
                     break;
                 case 'keke':
-                    await this.updateOnlineTricycle(driverId, numberOfSeats!, trx, tripId)
+                    await this.updateOnlineTricycle(driverId, numberOfSeats!, trx, tripId, isCharter)
                     break;
                 default:
                     break;
@@ -126,24 +141,22 @@ class TripService {
             //Notify rider that request has been accepted;
             console.log('notifying rider that driver is on the way...');
             Event.emit('trip:accepted', trip);
-            return trip;
+            return { trip_id: trip.id, success: true };;
 
         } catch (error) {
             throw error
         }
     }
-
     public async rejectTripRequest(tripId: number, driverId: number) {
         try {
             const trip = await Trip.query().where('id', tripId)
                 .preload('vehicleSpecs').firstOrFail();
 
-            // console.log(trip, driverId);
             const { rejections, numberOfMatches, vehicleSpecs: { vehicleType } } = trip;
 
-
             //Check if this trip has been rejected the maximun number of times set for it
-            if (rejections === numberOfMatches) {
+            const currentRejections = rejections + 1;
+            if (currentRejections === numberOfMatches) {
                 //Notify the rider that the request can't be fullfilled
                 return this.tripRequestRejected(trip);
             }
@@ -174,7 +187,7 @@ class TripService {
             //Emit an event with the trip id to iterate over the demand/supply
             //matching workflow
             Event.emit('iterate:trip:request:matching', tripId);
-            return;
+            return { trip_id: trip.id, is_rejected: true };
 
         } catch (error) {
             throw error
@@ -188,7 +201,7 @@ class TripService {
             trip.startedAt = DateTime.fromJSDate(new Date());
             await trip.save();
             await trip.status.save();
-            return trip;
+            return { trip_id: trip.id, success: true };
         } catch (error) {
             throw error;
         }
@@ -215,14 +228,25 @@ class TripService {
             throw error;
         }
     }
-    public async cancelTrip(tripId: number) {
-        console.log('canceling trip...', tripId)
+    public async cancelTrip(tripId: number, reason: string) {
+        const trip = await Trip.query().where('id', tripId)
+            .preload('status')
+            .preload('driver').firstOrFail();
+        trip.status.status = 'canceled';
+        trip.status.reasonToCancel = reason;
+        await trip.status.save();
+        if (trip.driver) {
+            //Notify the driver that the rider has canceled the trip
+            Event.emit('trip:canceled', trip.driver.id);
+        }
+        return { trip_id: trip.id, is_canceled: true, success: true };
     }
     private async updateOnlineBikeOnTripCompleted(driverId: number) {
         try {
             const bike = await OnlineBike.query()
                 .where('driver_id', driverId).firstOrFail();
             bike.inTransit = false;
+
             return bike.save();
         } catch (error) {
             throw error;
@@ -234,10 +258,12 @@ class TripService {
                 .where('driver_id', driverId).firstOrFail();
             const { vehicleSpecs: { isCharter, numberOfSeats } } = trip;
             if (isCharter) {
+                tricycle.availableSeats = 4;
                 tricycle.inTransit = false;
                 return tricycle.save();
             }
             const seats = numberOfSeats as number;
+            tricycle.inTransit = tricycle.availableSeats + seats < 4
             tricycle.availableSeats = tricycle.availableSeats + seats;
             return tricycle.save();
 
@@ -245,7 +271,6 @@ class TripService {
             throw error;
         }
     }
-
     //Notifies the rider that their request couldn't be fulfilled
     private async tripRequestRejected(trip: Trip) {
         try {
@@ -265,24 +290,23 @@ class TripService {
             throw error;
         }
     }
-    private matchTricycleDrivers(trip: Trip): Promise<any[]> {
-        const { previouslyRejected, vehicleSpecs: { isCharter, numberOfSeats } } = trip;
+    private async matchTricycleDrivers(trip: Trip): Promise<any[]> {
+        const { vehicleSpecs: { isCharter, numberOfSeats } } = trip;
         const query = OnlineTricycle.query();
-
-        //Exempt drivers who had previously rejected this very trip
-        if (previouslyRejected) {
-            query.where('rejected_trip_id', '!=', trip.id);
-        }
         if (isCharter) {
             return query
                 .where('in_transit', false)
                 .preload('driver')
                 .preload('geolocation');
         }
-        return query
+        let kekes = await query
             .where('available_seats', '>=', numberOfSeats!)
             .preload('driver')
             .preload('geolocation');
+
+        kekes = kekes.filter(keke => keke.rejectedTripId !== trip.id);
+        // console.log('kekes', kekes.map(keke => keke.toJSON()));
+        return kekes
     }
     private matchBikeDrivers(trip: Trip): Promise<any[]> {
         const { previouslyRejected } = trip;
@@ -301,7 +325,7 @@ class TripService {
     private loadTrips(page: number, limit: number, status?: string) {
         const query = Trip.query();
         if (status) {
-            query.whereHas('status', status => status.where('status', status))
+            query.whereHas('status', query => query.where('status', status))
         }
         return query
             .preload('geolocation')
@@ -323,11 +347,14 @@ class TripService {
             throw error
         }
     }
-    private async updateOnlineTricycle(driverId: number, numberOfSeats: number, trx: any, tripId: number) {
+    private async updateOnlineTricycle(driverId: number, numberOfSeats: number, trx: any, tripId: number, isCharter?: boolean) {
         try {
             const tricycle = await OnlineTricycle.query()
                 .where('driver_id', driverId).firstOrFail();
             tricycle.availableSeats = tricycle.availableSeats - numberOfSeats;
+            if (isCharter) {
+                tricycle.availableSeats = 0;
+            }
             tricycle.inTransit = true;
             tricycle.tripId = tripId;
             tricycle.useTransaction(trx);
@@ -336,7 +363,6 @@ class TripService {
             throw error
         }
     }
-
 }
 
 export default new TripService();

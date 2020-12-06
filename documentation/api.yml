@@ -57,16 +57,13 @@ paths:
               schema:
               example:
                   {
-                    'user_id': 2,
-                    'token': 'Mg.8hBq8wzx4kBNAgH3QfWUJ_hmPYnOKKD',
-                    'id': 2,
-                    'email': 'johndoe@gmail.com',
-                    'phone_number': null,
-                    "role": 'admin',
-                    'created_at': '2020-11-07T05:06:35.694+01:00',
-                    'updated_at': '2020-11-07T05:06:35.694+01:00',
+                      "user_id": 11,
+                      "token": "MjQ.P6KOGCL9myibgGAsnsGM-eT3fBpyMDK3KQ1KquVkbQZRnCRVXtnqoW6R4q9v",
+                      "email": "Sigurd.Walker@yahoo.com",
+                      "phone_number": "404-721-5258 x30900",
+                      "role": "driver",
+                      "created_at": "2020-12-04T11:00:40.401+01:00"
                   }
-
 
         404:
           description: User not found
@@ -86,7 +83,7 @@ paths:
       tags:
         - Authentication
       summary: User Registration/Sign up
-      description: Registers or signs up a new user with their email, phone number and password
+      description: Registers or signs up a new user with their phone number and password
       operationId: register
       requestBody:
         content:
@@ -103,50 +100,26 @@ paths:
           content:
             application/json:
               schema:
-              
               examples:
                 driver:
                   value:
                     {
-                      'user_id': 3,
-                      'token': 'NQ.V-t24aSaY-Qa-yOuomlGFYTL0WOkEoKN6tXJnx9F8xOjpNG4FaMgmQe4gZxg',
-                      'phone_number': '080835274833',
-                      'role': 'driver',
-                      'created_at': '2020-11-22T12:29:52.091+01:00',
-                      'updated_at': '2020-11-22T12:29:52.096+01:00',
-                      'id': 3,
-                      'driver':
-                        {
-                          'id': 1,
-                          'first_name': null,
-                          'last_name': null,
-                          'full_name': null,
-                          'bvn': null,
-                          'user_id': 3,
-                          'created_at': '2020-11-22T12:29:52.170+01:00',
-                          'updated_at': '2020-11-22T12:29:52.170+01:00',
-                        },
+                        "user_id": 11,
+                        "token": "MjQ.P6KOGCL9myibgGAsnsGM-eT3fBpyMDK3KQ1KquVkbQZRnCRVXtnqoW6R4q9v",
+                        "email": "Sigurd.Walker@yahoo.com",
+                        "phone_number": "404-721-5258 x30900",
+                        "role": "driver",
+                        "created_at": "2020-12-04T11:00:40.401+01:00"
                     }
                 rider:
                   value:
                     {
-                      "user_id": 4,
-                      "token": "Ng.MJt1FQwBYjEeAE8vUHWqDA0QKX5mFaHBXao6yXKNjoYzyE9lypOuCe9zRvyP",
-                      "phone_number": "08083927161",
+                      "user_id": 11,
+                      "token": "MjQ.P6KOGCL9myibgGAsnsGM-eT3fBpyMDK3KQ1KquVkbQZRnCRVXtnqoW6R4q9v",
+                      "email": "Sigurd.Walker@yahoo.com",
+                      "phone_number": "404-721-5258 x30900",
                       "role": "rider",
-                      "created_at": "2020-11-22T12:36:06.935+01:00",
-                      "updated_at": "2020-11-22T12:36:06.940+01:00",
-                      "id": 4,
-                      "rider": {
-                        "id": 1,
-                        "first_name": null,
-                        "last_name": null,
-                        "address": null,
-                        "bvn": null,
-                        "user_id": 4,
-                        "created_at": "2020-11-22T12:36:07.006+01:00",
-                        "updated_at": "2020-11-22T12:36:07.006+01:00"
-                      }
+                      "created_at": "2020-12-04T11:00:40.401+01:00"
                     }
 
         422:
@@ -182,22 +155,22 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  # User related routes
-  /users:
+  # Riders related routes
+  /riders:
     get:
       tags:
-        - Users
-      summary: Gets list of users
+        - Riders
+      summary: Gets list of riders
       description: >
-        Returns a paginated list of users
-      operationId: getUsers
+        Returns a paginated list of riders
+      operationId: getRiders
       parameters:
           - $ref: '#/components/parameters/limitParam'
           - $ref: '#/components/parameters/pageParam'
       responses:
         200:
           description: >
-            This is the paginated list of users
+            This is the paginated list of riders
           content:
             application/json:
               example:
@@ -216,102 +189,18 @@ paths:
                     },
                   'data':
                     [
-                      {
-                        'id': 1,
-                        'email': 'user@gmail.com',
-                        'phone_number': null,
-                        'remember_me_token': null,
-                        'created_at': '2020-11-07T04:57:45.129+01:00',
-                        'updated_at': '2020-11-07T05:06:35.596+01:00',
-                        'profile':
-                          {
-                            'id': 1,
-                            'first_name': null,
-                            'last_name': null,
-                            'other_name': null,
-                            'gender': null,
-                            'disability': null,
-                            'age': null,
-                            'role': 'user',
-                            'user_id': 1,
-                            'state': null,
-                            'lga': null,
-                            'ward': null,
-                            'polling_unit': null,
-                            'created_at': '2020-11-07T05:06:35.656+01:00',
-                            'updated_at': '2020-11-07T05:06:35.656+01:00',
-                          },
-                      }
-                    ],
-                }
-
-
-        500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /users/search:
-    get:
-      tags:
-        - Users
-      summary: Gets list of users matching searchParam
-      description: >
-        Returns a paginated list of users
-      operationId: searchUsers
-      parameters:
-          - $ref: '#/components/parameters/limitParam'
-          - $ref: '#/components/parameters/pageParam'
-          - $ref: '#/components/parameters/searchTextParam'
-      responses:
-        200:
-          description: >
-            This is the paginated list of users
-          content:
-            application/json:
-              example:
-                {
-                  'meta':
-                    {
-                      'total': 2,
-                      'per_page': 10,
-                      'current_page': 1,
-                      'last_page': 1,
-                      'first_page': 1,
-                      'first_page_url': '/?page=1',
-                      'last_page_url': '/?page=1',
-                      'next_page_url': null,
-                      'previous_page_url': null,
-                    },
-                  'data':
-                    [
-                      {
-                        'id': 1,
-                        'email': 'user@gmail.com',
-                        'phone_number': null,
-                        'remember_me_token': null,
-                        'created_at': '2020-11-07T04:57:45.129+01:00',
-                        'updated_at': '2020-11-07T05:06:35.596+01:00',
-                        'profile':
-                          {
-                            'id': 1,
-                            'first_name': null,
-                            'last_name': null,
-                            'other_name': null,
-                            'gender': null,
-                            'disability': null,
-                            'age': null,
-                            'role': 'user',
-                            'user_id': 1,
-                            'state': null,
-                            'lga': null,
-                            'ward': null,
-                            'polling_unit': null,
-                            'created_at': '2020-11-07T05:06:35.656+01:00',
-                            'updated_at': '2020-11-07T05:06:35.656+01:00',
-                          },
-                      }
+                        {
+                          'id': 1,
+                          'first_name': 'Asia',
+                          'last_name': 'Blanda',
+                          'address': 'Streichfurt',
+                          'bvn': '1234569873645',
+                          'created_at': '2020-12-04T11:00:48.572+01:00',
+                          'updated_at': '2020-12-04T11:00:48.572+01:00',
+                          'role': 'rider',
+                          'email': 'Euna62@gmail.com',
+                          'phone_number': '273-829-7238 x801',
+                        }
                     ],
                 }
         500:
@@ -320,203 +209,89 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /users/{id}:
+  /riders/{id}:
     parameters:
       - $ref: "#/components/parameters/idParam"
     get:
       tags:
-        - Users
-      summary: Gets a user
+        - Riders
+      summary: Gets a rider by their id
       description: >
-        Returns a user based on their id.
-      operationId: getUserById
+        Returns rider by their id
+      operationId: riderById
       responses:
         200:
-          description: A user matching the specified id
+          description: >
+            Ok, successful. 
           content:
             application/json:
               schema:
-                example:
-                  {
-                    'id': 1,
-                    'email': 'user@gmail.com',
-                    'phone_number': null,
-                    'remember_me_token': null,
-                    'created_at': '2020-11-07T04:57:45.129+01:00',
-                    'updated_at': '2020-11-07T05:06:35.596+01:00',
-                    'profile':
-                      {
-                        'id': 1,
-                        'first_name': null,
-                        'last_name': null,
-                        'other_name': null,
-                        'gender': null,
-                        'disability': null,
-                        'age': null,
-                        'role': 'admin',
-                        'user_id': 1,
-                        'state': null,
-                        'lga': null,
-                        'ward': null,
-                        'polling_unit': null,
-                        'created_at': '2020-11-07T05:06:35.656+01:00',
-                        'updated_at': '2020-11-07T05:06:35.656+01:00',
-                        'photo':
-                                {
-                                  'id': 1,
-                                  'url': 'https://ik.imagekit.io/trsuszcduc/dangiwa/users/cam3_XxM38k9-i.jpeg',
-                                  'file_id': '5fa63b26dae0113f445f5998',
-                                  'thumbnail_url': 'https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/dangiwa/users/cam3_XxM38k9-i.jpeg',
-                                  'created_at': '2020-11-07T07:14:38.976+01:00',
-                                  'updated_at': '2020-11-07T07:14:38.976+01:00',
-                                }
-
-                      },
-                  }
+               example:
+                 {
+                  'id': 1,
+                  'first_name': 'Asia',
+                  'last_name': 'Blanda',
+                  'address': 'Streichfurt',
+                  'bvn': '1234569873645',
+                  'created_at': '2020-12-04T11:00:48.572+01:00',
+                  'updated_at': '2020-12-04T11:00:48.572+01:00',
+                  'email': 'Euna62@gmail.com',
+                  'phone_number': '273-829-7238 x801',
+                }
         404:
           description: No users found matching the id parameter
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CustomError"
+                $ref: "#/components/schemas/Error"
+
         500:
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-
+                $ref: "#/components/schemas/Error"      
     put:
       security:
         - bearerAuth: []
       tags:
-        - Users
-      summary: Updates a user profile information
+        - Riders
+      summary: Updates a rider's profile information
       description: >
-        Updates a user information based on their id. All fields of the request body are optional. This operation can only be carried out by the owner of the profile when they are logged in.
-      operationId: updateUserById
+        Updates a rider's information based on their id. All fields of the request body are optional. This operation can only be carried out by the owner of the profile when they are logged in.
+      operationId: updateRiderById
       requestBody:
         content:
           multipart/form-data:
             schema:
-             $ref: '#/components/schemas/UserProfile'
-                  
+              $ref: '#/components/schemas/RiderProfile'
+
       responses:
         200:
-          description: Ok, user successfully updated
+          description: Ok, rider successfully updated
           content:
             application/json:
               schema:
               example:
                 {
-                  'id': 3,
-                  'email': 'hankvogt@gmail.com',
-                  'phone_number': '08093726483',
-                  'created_at': '2020-11-07T07:02:17.684+01:00',
-                  'updated_at': '2020-11-07T07:39:51.049+01:00',
-                  'profile':
-                    {
-                      'id': 2,
-                      'first_name': 'Hank',
-                      'last_name': 'Vogt',
-                      'other_name': 'Leroy',
-                      'gender': 'male',
-                      'disability': 'no',
-                      'age': null,
-                      'role': 'user',
-                      'user_id': 3,
-                      'state': 'Akansas',
-                      'lga': 'oaky',
-                      'ward': 'ward 3',
-                      'polling_unit': 'oak',
-                      'created_at': '2020-11-07T07:02:17.698+01:00',
-                      'updated_at': '2020-11-07T07:41:39.305+01:00',
-                      'photo':
-                        {
-                          'id': 1,
-                          'url': 'https://ik.imagekit.io/trsuszcduc/dangiwa/users/cam3_XxM38k9-i.jpeg',
-                          'file_id': '5fa63b26dae0113f445f5998',
-                          'thumbnail_url': 'https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/dangiwa/users/cam3_XxM38k9-i.jpeg',
-                          'created_at': '2020-11-07T07:14:38.976+01:00',
-                          'updated_at': '2020-11-07T07:14:38.976+01:00',
-                        },
-                    },
-                }
-
-        404:
-          description: User not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CustomError"
-
-        500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-    delete:
-      security:
-        - bearerAuth: []
-      tags:
-        - Users
-      summary: Deletes a user from the database
-      description: >
-        Deletes a customer, vendor, or agent from the database using their id. Only a user with admin privileges is authorized to perform this operation.
-      operationId: deleteUserById
-      responses:
-        200:
-          description: Ok, user successfully deleted
-        404:
-          description: User not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-        500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /users/{id}/change-photo:
-    parameters:
-      - $ref: "#/components/parameters/idParam"
-    put:
-      security:
-        - bearerAuth: []
-      tags:
-        - Users
-      summary: Updates a user profile photo
-      description: >
-        Updates a user profile photo based on their id. 
-      operationId: changeProfilePicture
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                photo:
-                  type: string
-                  format: binary
-      responses:
-        200:
-          description: Ok, user profile photo successfully updated
-          content:
-            application/json:
-              schema:
-              example:
-                {
-                  'id': 1,
-                  'url': 'https://ik.imagekit.io/trsuszcduc/dangiwa/users/cam3_XxM38k9-i.jpeg',
-                  'file_id': '5fa63b26dae0113f445f5998',
-                  'thumbnail_url': 'https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/dangiwa/users/cam3_XxM38k9-i.jpeg',
-                  'created_at': '2020-11-07T07:14:38.976+01:00',
-                  'updated_at': '2020-11-07T07:14:38.976+01:00',
+                  "id": 1,
+                  "first_name": "Jane",
+                  "last_name": "Doe",
+                  "address": "Streichfurt",
+                  "bvn": "1234569873645",
+                  "created_at": "2020-12-04T11:00:48.572+01:00",
+                  "updated_at": "2020-12-06T04:49:20.229+01:00",
+                  "profilePicture": {
+                    "id": 1,
+                    "url": "https://ik.imagekit.io/trsuszcduc/saferide/users/cam1_u0eVBFHLN.jpeg",
+                    "file_id": "5fcc54e42a1d1e3e46f6ed1f",
+                    "thumbnail_url": "https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/saferide/users/cam1_u0eVBFHLN.jpeg",
+                    "created_at": "2020-12-06T04:49:21.067+01:00",
+                    "updated_at": "2020-12-06T04:49:21.067+01:00"
+                  },
+                  "email": "Euna62@gmail.com",
+                  "phone_number": "273-829-7238 x801",
+                  "role": "rider"
                 }
 
         404:
@@ -533,246 +308,92 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /users/dangiwa:
+  #Drivers related routes
+  /drivers:
     get:
       tags:
-        - Users
-      summary: Gets Dangiwa profile
+        - Drivers
+      summary: Gets list of drivers
       description: >
-        It returns Dangiwa profile information
-      operationId: dangiwaProfile
+        Returns a paginated list of drivers
+      operationId: getDrivers
+      parameters:
+          - $ref: '#/components/parameters/limitParam'
+          - $ref: '#/components/parameters/pageParam'
       responses:
         200:
-          description: Dangiwa's profile information
+          description: >
+            This is the paginated list of drivers
           content:
             application/json:
-              schema:
-                example:
-                  {
-                    "id": 1,
-                    "first_name": "John",
-                    "last_name": "Doe",
-                    "other_names": "Evans",
-                    "title": "Engr",
-                    "workplace": "Arise",
-                    "position": "MD",
-                    "role": "admin",
-                    "user_id": 1,
-                    "about": "_**Lorem **_ipsum _++dolor sit++_ amet consectetur adipisicing elit. Quisquam deserunt aspernatur repellat harum ut accusantium magni optio temporibus, corrupti id suscipit ipsum in, natus eius? **Ut totam magnam eum molestiae!**",
-                    "about_us": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident harum ratione architecto, voluptas dignissimos fuga cum quibusdam eos sequi ipsam eum! Error hic fugiat voluptatum odit, architecto laudantium maiores ab.\n\n_**Lorem ipsum dolor sit amet, consectetur **_adipisicing elit. Provident harum ratione architecto, voluptas dignissimos fuga cum quibusdam eos sequi ipsam eum! Error hic fugiat voluptatum odit, architecto laudantium maiores ab.\n\nLorem ipsum dolor sit amet,++** consectetur adipisicing**++ elit. Provident harum ratione architecto, voluptas dignissimos fuga cum quibusdam eos sequi ipsam eum! Error hic fugiat voluptatum odit, architecto laudantium maiores ab.",
-                    "education": [
-                        {
-                            "school": "Springlight Primary School",
-                            "qualifications": "First School Leaving Certificate",
-                            "from": "1981",
-                            "to": "1987"
+              example:
+                {
+                  'meta':
+                    {
+                      'total': 2,
+                      'per_page': 10,
+                      'current_page': 1,
+                      'last_page': 1,
+                      'first_page': 1,
+                      'first_page_url': '/?page=1',
+                      'last_page_url': '/?page=1',
+                      'next_page_url': null,
+                      'previous_page_url': null,
+                    },
+                  'data':
+                    [
+                       {
+                          'id': 1,
+                          'full_name': 'PercivalGleason',
+                          'bvn': '1234569873645',
+                          'verified': false,
+                          'suspended': false,
+                          'created_at': '2020-12-04T11:00:27.523+01:00',
+                          'updated_at': '2020-12-04T11:00:27.523+01:00',
+                          'address':
+                            {
+                              'id': 1,
+                              'state': 'New Jersey',
+                              'lga': 'Avon',
+                              'home_address': '9328 Michaela Knolls Suite 704',
+                              'driver_id': 1,
+                              'created_at': '2020-12-04T11:00:27.534+01:00',
+                              'updated_at': '2020-12-04T11:00:27.534+01:00',
+                            },
+                          'vehicle':
+                            {
+                              'id': 1,
+                              'vehicle_type': 'bike',
+                              'model_number': 'Land Cruiser',
+                              'plate_number': 'PFLIR5DC9ZRG32946',
+                              'color': 'maroon',
+                              'driver_id': 1,
+                              'created_at': '2020-12-04T11:00:27.545+01:00',
+                              'updated_at': '2020-12-04T11:00:27.545+01:00',
+                            },
+                          'role': 'driver',
+                          'email': 'Zoie2@hotmail.com',
+                          'phone_number': '541-761-6433 x303',
                         }
+
                     ],
-                    "mission": "_**Lorem **__\\_ipsum _++dolor sit++\\_ amet consectetur adipisicing elit. Quisquam deserunt aspernatur repellat harum ut accusantium magni optio temporibus, corrupti id suscipit ipsum in, natus eius? **Ut totam magnam eum molestiae!**",
-                    "vision": "_**Lorem **__\\_ipsum _++dolor sit++\\_ amet consectetur adipisicing elit. Quisquam deserunt aspernatur repellat harum ut accusantium magni optio temporibus, corrupti id suscipit ipsum in, natus eius? **Ut totam magnam eum molestiae!**",
-                    "created_at": "2020-11-15T10:25:12.458+01:00",
-                    "updated_at": "2020-11-15T11:43:49.041+01:00"
-                  }
-        404:
-          description: No profile found 
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
+                }
         500:
           description: Internal Server Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-
-  #News
-  /news:
-    get:
-      tags:
-        - News
-      summary: Paginated list of news
-      description: >
-        Returns a paginated list of news available, comments,and likes on the news
-        and also the users who made the comments.
-      operationId: listNews
-      parameters:
-        - $ref: "#/components/parameters/limitParam"
-        - $ref: "#/components/parameters/pageParam"
-      responses:
-        200:
-          description: Ok, successful request
-          content:
-            application/json:
-              schema:
-                example:
-                  {
-                    "meta": {
-                        "total": 9,
-                        "per_page": 10,
-                        "current_page": 1,
-                        "last_page": 1,
-                        "first_page": 1,
-                        "first_page_url": "/?page=1",
-                        "last_page_url": "/?page=1",
-                        "next_page_url": null,
-                        "previous_page_url": null
-                     },
-                     "data":[
-                        {
-                          "id": 6,
-                          "title": "This is new title",
-                          "description": "Qui itaque fugiat odio quibusdam necessitatibus. Molestias debitis corrupti non et harum enim. Ut sunt pariatur eum consectetur.\n \rEt eum et quo facere. Ut repellendus perferendis quo temporibus aut provident. Voluptatem maxime facilis repudiandae quo asperiores. Facere quod corporis ducimus est dignissimos laboriosam. Doloremque ab eum unde rerum minima delectus nobis debitis quo. Impedit sit autem aut consequuntur a aperiam esse laborum.",
-                          "category": "general",
-                          "created_at": "2020-11-15T18:55:17.966+01:00",
-                          "updated_at": "2020-11-15T23:41:30.785+01:00",
-                          "is_visible": true,
-                          "total_comments": 5,
-                          "total_likes": 0,
-                          "coverImage":{
-                            "id": 12,
-                            "url": "https://ik.imagekit.io/trsuszcduc/dangiwa/news/photos/cat6_RXSeK9Ma5.jpg",
-                            "file_id": "5fb1aeb232c9df1ac9c77bc1",
-                            "thumbnail_url": "https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/dangiwa/news/photos/cat6_RXSeK9Ma5.jpg",
-                            "is_gallery": false,
-                            "title": null,
-                            "description": null,
-                            "profile_id": null,
-                            "project_id": null,
-                            "news_id": 6,
-                            "created_at": "2020-11-15T23:41:30.796+01:00",
-                            "updated_at": "2020-11-15T23:41:30.796+01:00"
-                          },
-                          "likes": [],
-                          "comments":[
-                            {
-                              "id": 21,
-                              "comment": "Soluta nisi odio dolorum earum commodi itaque quos ut. Voluptatibus exercitationem laudantium adipisci dolores. Quos possimus et fuga aut ipsam odio qui. Est aut earum reiciendis est.",
-                              "user_id": 23,
-                              "project_id": null,
-                              "news_id": 6,
-                              "created_at": "2020-11-15T18:55:18.050+01:00",
-                              "updated_at": "2020-11-15T18:55:18.050+01:00",
-                              'commentor':
-                                    {
-                                      'id': 23,
-                                      'email': 'Roslyn_Hahn@gmail.com',
-                                      'phone_number': '956.689.7083 x45382',
-                                      'created_at': '2020-11-15T18:55:18.002+01:00',
-                                      'updated_at': '2020-11-15T18:55:18.003+01:00',
-                                    }
-                            }
-                          ]
-                        }
-                     ]
-                  }
-
-        500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /news/search:
-    get:
-      tags:
-        - News
-      summary: Paginated list of news matching search param
-      description: >
-        Returns a paginated list of news available, comments,and likes on the news
-        and also the users who made the comments.
-      operationId: searchNews
-      parameters:
-        - $ref: "#/components/parameters/limitParam"
-        - $ref: "#/components/parameters/pageParam"
-        - $ref: "#/components/parameters/searchTextParam"
-      responses:
-        200:
-          description: Ok, successful request
-          content:
-            application/json:
-              schema:
-                example:
-                  {
-                    "meta": {
-                        "total": 9,
-                        "per_page": 10,
-                        "current_page": 1,
-                        "last_page": 1,
-                        "first_page": 1,
-                        "first_page_url": "/?page=1",
-                        "last_page_url": "/?page=1",
-                        "next_page_url": null,
-                        "previous_page_url": null
-                     },
-                     "data":[
-                        {
-                          "id": 6,
-                          "title": "This is new title",
-                          "description": "Qui itaque fugiat odio quibusdam necessitatibus. Molestias debitis corrupti non et harum enim. Ut sunt pariatur eum consectetur.\n \rEt eum et quo facere. Ut repellendus perferendis quo temporibus aut provident. Voluptatem maxime facilis repudiandae quo asperiores. Facere quod corporis ducimus est dignissimos laboriosam. Doloremque ab eum unde rerum minima delectus nobis debitis quo. Impedit sit autem aut consequuntur a aperiam esse laborum.",
-                          "category": "general",
-                          "created_at": "2020-11-15T18:55:17.966+01:00",
-                          "updated_at": "2020-11-15T23:41:30.785+01:00",
-                          "is_visible": true,
-                          "total_comments": 5,
-                          "total_likes": 0,
-                          "coverImage":{
-                            "id": 12,
-                            "url": "https://ik.imagekit.io/trsuszcduc/dangiwa/news/photos/cat6_RXSeK9Ma5.jpg",
-                            "file_id": "5fb1aeb232c9df1ac9c77bc1",
-                            "thumbnail_url": "https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/dangiwa/news/photos/cat6_RXSeK9Ma5.jpg",
-                            "is_gallery": false,
-                            "title": null,
-                            "description": null,
-                            "profile_id": null,
-                            "project_id": null,
-                            "news_id": 6,
-                            "created_at": "2020-11-15T23:41:30.796+01:00",
-                            "updated_at": "2020-11-15T23:41:30.796+01:00"
-                          },
-                          "likes": [],
-                          "comments":[
-                            {
-                              "id": 21,
-                              "comment": "Soluta nisi odio dolorum earum commodi itaque quos ut. Voluptatibus exercitationem laudantium adipisci dolores. Quos possimus et fuga aut ipsam odio qui. Est aut earum reiciendis est.",
-                              "user_id": 23,
-                              "project_id": null,
-                              "news_id": 6,
-                              "created_at": "2020-11-15T18:55:18.050+01:00",
-                              "updated_at": "2020-11-15T18:55:18.050+01:00",
-                              'commentor':
-                                    {
-                                      'id': 23,
-                                      'email': 'Roslyn_Hahn@gmail.com',
-                                      'phone_number': '956.689.7083 x45382',
-                                      'created_at': '2020-11-15T18:55:18.002+01:00',
-                                      'updated_at': '2020-11-15T18:55:18.003+01:00',
-                                    }
-                            }
-                          ]
-                        }
-                     ]
-                  }
-
-        500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /news/{id}:
+  /drivers/{id}:
     parameters:
       - $ref: "#/components/parameters/idParam"
     get:
       tags:
-        - News
-      summary: Gets news by its id
+        - Drivers
+      summary: Gets a driver by their id
       description: >
-        Returns news, its comments, likes and users who liked and commented on it. 
-        A call to this endpoint isn't entirely necessary because the same data are
-        returned from this **/news** endpoint.
-      operationId: newsById
+        Returns driver by their id
+      operationId: driverById
       responses:
         200:
           description: >
@@ -781,53 +402,40 @@ paths:
             application/json:
               schema:
                example:
-                {
-                  'id': 6,
-                  'title': 'This is new title',
-                  'description': "Qui itaque fugiat odio quibusdam necessitatibus. Molestias debitis corrupti non et harum enim. Ut sunt pariatur eum consectetur.\n \rEt eum et quo facere. Ut repellendus perferendis quo temporibus aut provident. Voluptatem maxime facilis repudiandae quo asperiores. Facere quod corporis ducimus est dignissimos laboriosam. Doloremque ab eum unde rerum minima delectus nobis debitis quo. Impedit sit autem aut consequuntur a aperiam esse laborum.",
-                  'category': 'general',
-                  'created_at': '2020-11-15T18:55:17.966+01:00',
-                  'updated_at': '2020-11-15T23:41:30.785+01:00',
-                  'is_visible': true,
-                  'total_comments': 5,
-                  'total_likes': 0,
-                  'coverImage':
-                    {
-                      'id': 12,
-                      'url': 'https://ik.imagekit.io/trsuszcduc/dangiwa/news/photos/cat6_RXSeK9Ma5.jpg',
-                      'file_id': '5fb1aeb232c9df1ac9c77bc1',
-                      'thumbnail_url': 'https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/dangiwa/news/photos/cat6_RXSeK9Ma5.jpg',
-                      'is_gallery': false,
-                      'title': null,
-                      'description': null,
-                      'profile_id': null,
-                      'project_id': null,
-                      'news_id': 6,
-                      'created_at': '2020-11-15T23:41:30.796+01:00',
-                      'updated_at': '2020-11-15T23:41:30.796+01:00',
-                    },
-                  'likes': [],
-                  'comments':
-                    [
+                 {
+                    'id': 1,
+                    'full_name': 'Percival Gleason',
+                    'bvn': '1234569873645',
+                    'verified': false,
+                    'suspended': false,
+                    'created_at': '2020-12-04T11:00:27.523+01:00',
+                    'updated_at': '2020-12-04T11:00:27.523+01:00',
+                    'address':
                       {
-                        'id': 21,
-                        'comment': 'Soluta nisi odio dolorum earum commodi itaque quos ut. Voluptatibus exercitationem laudantium adipisci dolores. Quos possimus et fuga aut ipsam odio qui. Est aut earum reiciendis est.',
-                        'user_id': 23,
-                        'project_id': null,
-                        'news_id': 6,
-                        'created_at': '2020-11-15T18:55:18.050+01:00',
-                        'updated_at': '2020-11-15T18:55:18.050+01:00',
-                        'commentor':
-                          {
-                            'id': 23,
-                            'email': 'Roslyn_Hahn@gmail.com',
-                            'phone_number': '956.689.7083 x45382',
-                            'created_at': '2020-11-15T18:55:18.002+01:00',
-                            'updated_at': '2020-11-15T18:55:18.003+01:00',
-                          },
+                        'id': 1,
+                        'state': 'New Jersey',
+                        'lga': 'Avon',
+                        'home_address': '9328 Michaela Knolls Suite 704',
+                        'driver_id': 1,
+                        'created_at': '2020-12-04T11:00:27.534+01:00',
+                        'updated_at': '2020-12-04T11:00:27.534+01:00',
                       },
-                    ],
-                }
+                    'vehicle':
+                      {
+                        'id': 1,
+                        'vehicle_type': 'bike',
+                        'model_number': 'Land Cruiser',
+                        'plate_number': 'PFLIR5DC9ZRG32946',
+                        'color': 'maroon',
+                        'driver_id': 1,
+                        'created_at': '2020-12-04T11:00:27.545+01:00',
+                        'updated_at': '2020-12-04T11:00:27.545+01:00',
+                      },
+                    'documents': [],
+                    'email': 'Zoie2@hotmail.com',
+                    'phone_number': '541-761-6433 x303',
+                  }
+
         404:
           description: No users found matching the id parameter
           content:
@@ -840,81 +448,414 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-
-  # Suggestion routes
-  /suggestions:
-    post:
+                $ref: "#/components/schemas/Error"      
+    put:
       security:
         - bearerAuth: []
       tags:
-        - Suggestions
-      summary: Adds a new suggestion
-      description: Adds suggestion to the database
-      operationId: addSuggestion
+        - Drivers
+      summary: Updates a driver's profile information
+      description: >
+        Updates a driver's information based on their id. All fields of the request body are optional. This operation can only be carried out by the owner of the profile when they are logged in.
+      operationId: updateDriverById
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Suggestion"
-            example:
-              {
-                'suggestion': "Atque quisquam ut tempora quae facere possimus rerum. Odit eum repudiandae voluptatem voluptatum magni. Fugit aliquam adipisci et numquam ex. Similique rerum ducimus nesciunt fuga sit. Et nisi illum. Ducimus veritatis nemo quis vel voluptatem hic.\n \rVoluptas quidem dolorum quia quis earum. Quia est facilis praesentium ipsum accusamus adipisci qui laboriosam. Fugit error illo nulla animi ullam.\n \rAccusantium qui ad. Qui laboriosam error beatae id. Perspiciatis voluptatem ipsa sint omnis autem itaque dolor vel. Assumenda omnis eius et voluptate. Enim dolor ut laboriosam ad consectetur reprehenderit. Sed sit quia consequatur quasi est commodi reprehenderit sunt eligendi."
-              }
+              $ref: '#/components/schemas/DriverProfile'
 
       responses:
         200:
-          description: Ok, successful
+          description: Ok, driver successfully updated
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Suggestion"
               example:
                 {
-                  'suggestion': "Atque quisquam ut tempora quae facere possimus rerum. Odit eum repudiandae voluptatem voluptatum magni. Fugit aliquam adipisci et numquam ex. Similique rerum ducimus nesciunt fuga sit. Et nisi illum. Ducimus veritatis nemo quis vel voluptatem hic.\n \rVoluptas quidem dolorum quia quis earum. Quia est facilis praesentium ipsum accusamus adipisci qui laboriosam. Fugit error illo nulla animi ullam.\n \rAccusantium qui ad. Qui laboriosam error beatae id. Perspiciatis voluptatem ipsa sint omnis autem itaque dolor vel. Assumenda omnis eius et voluptate. Enim dolor ut laboriosam ad consectetur reprehenderit. Sed sit quia consequatur quasi est commodi reprehenderit sunt eligendi.",
-                  'id': 1
+                  "id": 1,
+                  "full_name": "Percival Gleason",
+                  "bvn": "1234569873645",
+                  "verified": false,
+                  "suspended": false,
+                  "created_at": "2020-12-04T11:00:27.523+01:00",
+                  "updated_at": "2020-12-06T05:03:35.239+01:00",
+                  "email": "PercivalGleason@gmail.com",
+                  "phone_number": "541-761-6433 x303",
+                  "role": "driver"
                 }
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomError'
+
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /drivers/{id}/address:
+    parameters:
+      - $ref: '#/components/parameters/idParam'
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - Drivers
+      summary: Updates a driver's address information
+      description: >
+        Updates a driver's address information based on their id. All fields of the request body are required.
+      operationId: updateAddress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DriverAddress'
+
+      responses:
+        200:
+          description: Ok, rider successfully updated
+          content:
+            application/json:
+              schema:
+              example:
+                {
+                  "id": 1,
+                  "state": "New Jersey",
+                  "lga": "Avon",
+                  "home_address": "9328 Michaela Knolls Suite 704",
+                  "created_at": "2020-12-04T11:00:27.534+01:00",
+                  "updated_at": "2020-12-04T11:00:27.534+01:00"
+                }
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomError'
+
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /drivers/{id}/vehicle:
+    parameters:
+      - $ref: '#/components/parameters/idParam'
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - Drivers
+      summary: Updates a driver's vehicle information
+      description: >
+        Updates a driver's vehicle information based on their id. All fields of the request body are required.
+      operationId: updateVehicle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DriverVehicle'
+
+      responses:
+        200:
+          description: Ok, driver successfully updated
+          content:
+            application/json:
+              schema:
+              example:
+                {
+                  "id": 1,
+                  "vehicle_type": "bike",
+                  "model_number": "Land Cruiser",
+                  "plate_number": "PFLIR5DC9ZRG32946",
+                  "color": "maroon",
+                  "created_at": "2020-12-04T11:00:27.545+01:00",
+                  "updated_at": "2020-12-04T11:00:27.545+01:00"
+                }
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomError'
+
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /drivers/toggle-on:
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - Drivers
+      summary: Handles toggle button on driver's dashboard
+      description: >
+        Gives the driver a means to declare that they are ready for booking for the day
+      operationId: toggleOn
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Toggle'
+
+      responses:
+        200:
+          description: Ok, driver successfully updated
+          content:
+            application/json:
+              schema:
+              example:
+                {
+                  "latitude": 40.7676919,
+                  "longitude": -73.98513559999999,
+                  "address":""
+                }
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomError'
+
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /drivers/toggle-off:
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - Drivers
+      summary: Handles toggle button on driver's dashboard
+      description: >
+        Gives the driver a means to declare that they are not ready for booking for the day
+      operationId: toggleOff
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Toggle'
+
+      responses:
+        200:
+          description: Ok, driver successfully updated
+          content:
+            application/json:
+              schema:
+              example:
+                {
+                  "latitude": 40.7676919,
+                  "longitude": -73.98513559999999,
+                  "address":""
+                }
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomError'
+
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /drivers/{id}/personal-data:
+    parameters:
+      - $ref: '#/components/parameters/idParam'
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - Drivers
+      summary: Updates a driver's personal documents 
+      description: >
+        Updates a driver's prersonal documents based on their id. All fields of the request body are required.
+      operationId: updateDocuments
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DriverDocuments'
+
+      responses:
+        200:
+          description: Ok, driver successfully updated
+          content:
+            application/json:
+              schema:
+              example:
+                {
+                  "id": 1,
+                  "full_name": "Percival Gleason",
+                  "bvn": "1234569873645",
+                  "verified": false,
+                  "suspended": false,
+                  "created_at": "2020-12-04T11:00:27.523+01:00",
+                  "updated_at": "2020-12-06T05:04:08.967+01:00",
+                  "documents": [
+                    {
+                      "id": 1,
+                      "url": "https://ik.imagekit.io/trsuszcduc/saferide/drivers/documents/cam2_RgFsH1KKk.jpeg",
+                      "file_id": "5fcc62832a1d1e3e46f7670d",
+                      "thumbnail_url": "https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/saferide/drivers/documents/cam2_RgFsH1KKk.jpeg",
+                      "document_type": "birth_certificate",
+                      "trip_vehicle_spec_id": null,
+                      "created_at": "2020-12-06T05:47:32.022+01:00",
+                      "updated_at": "2020-12-06T05:47:32.022+01:00"
+                    },
+                    {
+                      "id": 2,
+                      "url": "https://ik.imagekit.io/trsuszcduc/saferide/drivers/documents/cat3_swZC_GuqW.jpg",
+                      "file_id": "5fcc62852a1d1e3e46f76718",
+                      "thumbnail_url": "https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/saferide/drivers/documents/cat3_swZC_GuqW.jpg",
+                      "document_type": "national_id",
+                      "trip_vehicle_spec_id": null,
+                      "created_at": "2020-12-06T05:47:32.379+01:00",
+                      "updated_at": "2020-12-06T05:47:32.380+01:00"
+                    },
+                    {
+                      "id": 3,
+                      "url": "https://ik.imagekit.io/trsuszcduc/saferide/drivers/documents/cat2_WhkBN7MRy.jpg",
+                      "file_id": "5fcc62862a1d1e3e46f76723",
+                      "thumbnail_url": "https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/saferide/drivers/documents/cat2_WhkBN7MRy.jpg",
+                      "document_type": "utility_bill",
+                      "trip_vehicle_spec_id": null,
+                      "created_at": "2020-12-06T05:47:32.391+01:00",
+                      "updated_at": "2020-12-06T05:47:32.391+01:00"
+                    },
+                    {
+                      "id": 4,
+                      "url": "https://ik.imagekit.io/trsuszcduc/saferide/drivers/documents/cat1_R9jwpiuT_.jpg",
+                      "file_id": "5fcc628844d7155797a4a148",
+                      "thumbnail_url": "https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/saferide/drivers/documents/cat1_R9jwpiuT_.jpg",
+                      "document_type": "driver_license",
+                      "trip_vehicle_spec_id": null,
+                      "created_at": "2020-12-06T05:47:32.405+01:00",
+                      "updated_at": "2020-12-06T05:47:32.405+01:00"
+                    }
+                  ],
+                  "profilePicture": {
+                    "id": 4,
+                    "url": "https://ik.imagekit.io/trsuszcduc/saferide/users/cam5_y2UwJJP2z.jpeg",
+                    "file_id": "5fcc628b44d7155797a4a153",
+                    "thumbnail_url": "https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/saferide/users/cam5_y2UwJJP2z.jpeg",
+                    "created_at": "2020-12-06T05:47:34.624+01:00",
+                    "updated_at": "2020-12-06T05:47:34.624+01:00"
+                  }
+                }
+
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomError'
+
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  
+  #Trips routes
+  /trips/book:
+    post:
+      security:
+      - bearerAuth: []
+      tags:
+        - Trips
+      summary: Allows a rider to book a trip
+      description: >
+       Books a trip for the rider
+      operationId: bookTrip
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Trip'
+      responses:
+        200:
+          description: Ok, trip successfully booked
+          content:
+            application/json:
+              schema:
+              examples:
+                bike:
+                  value:
+                    {
+                        "isMatched": false
+                    }
+                keke:
+                  value:
+                    {
+                      'isMatched': true
+                    }
 
         422:
           description: Unprocessible entity
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/CustomError"
+
         500:
           description: Internal Server Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /suggestions/{id}:
-    parameters:
-      - $ref: "#/components/parameters/idParam"
-    put:
+  /trips/{id}/cancel:
+    post:
       security:
-        - bearerAuth: []
+      - bearerAuth: []
       tags:
-        - Suggestions
-      summary: Updates a suggestion
+        - Trips
+      summary: Cancels an already booked trip
       description: >
-        Updates a suggestion
-      operationId: updateSuggestionById
+        Allows the rider to cancel a trip they had already booked
+      operationId: cancelTrip
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Suggestion"
-            example:
-              suggestion: "new suggestion"
+              $ref: '#/components/schemas/Trip'
+            example: 
+              {
+                "reason": "Just changed my mind"
+              }
       responses:
         200:
-          description: Ok, suggestion successfully updated
-        404:
-          description: Suggestion not found
+          description: Ok, trip successfully canceled
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+              example:
+                { "trip_id": 2, "is_canceled": true, "success": true }
+        422:
+          description: Unprocessible entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomError"
 
         500:
           description: Internal Server Error
@@ -922,24 +863,39 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-    delete:
+  /trips/{id}/accept:
+    post:
       security:
-        - bearerAuth: []
+      - bearerAuth: []
       tags:
-        - Suggestions
-      summary: Deletes a suggestion
+        - Trips
+      summary: Allow a driver to accept a trip
       description: >
-        Deletes a food suggestion from the database using their id
-      operationId: deleteSuggestionById
+        Allows a driver to accept a trip booked by a rider
+      operationId: acceptTrip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Trip'
+            example: 
+              {
+                
+              }
       responses:
         200:
-          description: Ok, suggestion was successfully deleted
-        404:
-          description: Suggestion not found
+          description: Ok, trip successfully canceled
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+              example:
+                { "trip_id": 2, "success": true }
+        422:
+          description: Unprocessible entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomError"
 
         500:
           description: Internal Server Error
@@ -948,116 +904,895 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /trips/{id}/reject:
+    post:
+      security:
+      - bearerAuth: []
+      tags:
+        - Trips
+      summary: Allow a driver to reject a trip
+      description: >
+        Allows a driver to reject a trip booked by a rider
+      operationId: rejectTrip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Trip'
+            example: 
+              { }
+      responses:
+        200:
+          description: Ok, trip successfully canceled
+          content:
+            application/json:
+              schema:
+              example:
+                { "trip_id": 2, "is_rejected": true }
+        422:
+          description: Unprocessible entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomError"
+
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /trips/{id}/start:
+    post:
+      security:
+      - bearerAuth: []
+      tags:
+        - Trips
+      summary: Allows a driver to indicate that a trip has started
+      description: >
+        This is endpoint should be called when a driver successfully picks up
+        a rider
+      operationId: startTrip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Trip'
+            example: 
+              { }
+      responses:
+        200:
+          description: Ok, trip successfully started
+          content:
+            application/json:
+              schema:
+              example:
+                { "trip_id": 2, "success": true }
+        422:
+          description: Unprocessible entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomError"
+
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /trips/{id}/complete:
+    post:
+      security:
+      - bearerAuth: []
+      tags:
+        - Trips
+      summary: Allows a driver to indicate that a trip has complete
+      description: >
+        This is endpoint should be called when a driver successfully drops
+        a rider at their destination
+      operationId: completeTrip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Trip'
+            example: 
+              { }
+      responses:
+        200:
+          description: Ok, trip successfully completed
+          content:
+            application/json:
+              schema:
+              example:
+                { "trip_id": 2, "success": true }
+        422:
+          description: Unprocessible entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomError"
+
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  #Users routes              
+  # /users:
+  #   get:
+  #     tags:
+  #       - Users
+  #     summary: Gets list of users
+  #     description: >
+  #       Returns a paginated list of users
+  #     operationId: getUsers
+  #     parameters:
+  #         - $ref: '#/components/parameters/limitParam'
+  #         - $ref: '#/components/parameters/pageParam'
+  #     responses:
+  #       200:
+  #         description: >
+  #           This is the paginated list of users
+  #         content:
+  #           application/json:
+  #             example:
+  #               {
+  #                 'meta':
+  #                   {
+  #                     'total': 2,
+  #                     'per_page': 10,
+  #                     'current_page': 1,
+  #                     'last_page': 1,
+  #                     'first_page': 1,
+  #                     'first_page_url': '/?page=1',
+  #                     'last_page_url': '/?page=1',
+  #                     'next_page_url': null,
+  #                     'previous_page_url': null,
+  #                   },
+  #                 'data':
+  #                   [
+  #                     {
+  #                       'id': 1,
+  #                       'email': 'user@gmail.com',
+  #                       'phone_number': null,
+  #                       'remember_me_token': null,
+  #                       'created_at': '2020-11-07T04:57:45.129+01:00',
+  #                       'updated_at': '2020-11-07T05:06:35.596+01:00',
+  #                       'profile':
+  #                         {
+  #                           'id': 1,
+  #                           'first_name': null,
+  #                           'last_name': null,
+  #                           'other_name': null,
+  #                           'gender': null,
+  #                           'disability': null,
+  #                           'age': null,
+  #                           'role': 'user',
+  #                           'user_id': 1,
+  #                           'state': null,
+  #                           'lga': null,
+  #                           'ward': null,
+  #                           'polling_unit': null,
+  #                           'created_at': '2020-11-07T05:06:35.656+01:00',
+  #                           'updated_at': '2020-11-07T05:06:35.656+01:00',
+  #                         },
+  #                     }
+  #                   ],
+  #               }
+
+
+  #       500:
+  #         description: Internal Server Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  # /users/search:
+  #   get:
+  #     tags:
+  #       - Users
+  #     summary: Gets list of users matching searchParam
+  #     description: >
+  #       Returns a paginated list of users
+  #     operationId: searchUsers
+  #     parameters:
+  #         - $ref: '#/components/parameters/limitParam'
+  #         - $ref: '#/components/parameters/pageParam'
+  #         - $ref: '#/components/parameters/searchTextParam'
+  #     responses:
+  #       200:
+  #         description: >
+  #           This is the paginated list of users
+  #         content:
+  #           application/json:
+  #             example:
+  #               {
+  #                 'meta':
+  #                   {
+  #                     'total': 2,
+  #                     'per_page': 10,
+  #                     'current_page': 1,
+  #                     'last_page': 1,
+  #                     'first_page': 1,
+  #                     'first_page_url': '/?page=1',
+  #                     'last_page_url': '/?page=1',
+  #                     'next_page_url': null,
+  #                     'previous_page_url': null,
+  #                   },
+  #                 'data':
+  #                   [
+  #                     {
+  #                       'id': 1,
+  #                       'email': 'user@gmail.com',
+  #                       'phone_number': null,
+  #                       'remember_me_token': null,
+  #                       'created_at': '2020-11-07T04:57:45.129+01:00',
+  #                       'updated_at': '2020-11-07T05:06:35.596+01:00',
+  #                       'profile':
+  #                         {
+  #                           'id': 1,
+  #                           'first_name': null,
+  #                           'last_name': null,
+  #                           'other_name': null,
+  #                           'gender': null,
+  #                           'disability': null,
+  #                           'age': null,
+  #                           'role': 'user',
+  #                           'user_id': 1,
+  #                           'state': null,
+  #                           'lga': null,
+  #                           'ward': null,
+  #                           'polling_unit': null,
+  #                           'created_at': '2020-11-07T05:06:35.656+01:00',
+  #                           'updated_at': '2020-11-07T05:06:35.656+01:00',
+  #                         },
+  #                     }
+  #                   ],
+  #               }
+  #       500:
+  #         description: Internal Server Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  # /users/{id}:
+  #   parameters:
+  #     - $ref: "#/components/parameters/idParam"
+  #   get:
+  #     tags:
+  #       - Users
+  #     summary: Gets a user
+  #     description: >
+  #       Returns a user based on their id.
+  #     operationId: getUserById
+  #     responses:
+  #       200:
+  #         description: A user matching the specified id
+  #         content:
+  #           application/json:
+  #             schema:
+  #               example:
+  #                 {
+  #                   'id': 1,
+  #                   'email': 'user@gmail.com',
+  #                   'phone_number': null,
+  #                   'remember_me_token': null,
+  #                   'created_at': '2020-11-07T04:57:45.129+01:00',
+  #                   'updated_at': '2020-11-07T05:06:35.596+01:00',
+  #                   'profile':
+  #                     {
+  #                       'id': 1,
+  #                       'first_name': null,
+  #                       'last_name': null,
+  #                       'other_name': null,
+  #                       'gender': null,
+  #                       'disability': null,
+  #                       'age': null,
+  #                       'role': 'admin',
+  #                       'user_id': 1,
+  #                       'state': null,
+  #                       'lga': null,
+  #                       'ward': null,
+  #                       'polling_unit': null,
+  #                       'created_at': '2020-11-07T05:06:35.656+01:00',
+  #                       'updated_at': '2020-11-07T05:06:35.656+01:00',
+  #                       'photo':
+  #                               {
+  #                                 'id': 1,
+  #                                 'url': 'https://ik.imagekit.io/trsuszcduc/dangiwa/users/cam3_XxM38k9-i.jpeg',
+  #                                 'file_id': '5fa63b26dae0113f445f5998',
+  #                                 'thumbnail_url': 'https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/dangiwa/users/cam3_XxM38k9-i.jpeg',
+  #                                 'created_at': '2020-11-07T07:14:38.976+01:00',
+  #                                 'updated_at': '2020-11-07T07:14:38.976+01:00',
+  #                               }
+
+  #                     },
+  #                 }
+  #       404:
+  #         description: No users found matching the id parameter
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/CustomError"
+  #       500:
+  #         description: Internal Server Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+
+  #   put:
+  #     security:
+  #       - bearerAuth: []
+  #     tags:
+  #       - Users
+  #     summary: Updates a user profile information
+  #     description: >
+  #       Updates a user information based on their id. All fields of the request body are optional. This operation can only be carried out by the owner of the profile when they are logged in.
+  #     operationId: updateUserById
+  #     requestBody:
+  #       content:
+  #         multipart/form-data:
+  #           schema:
+  #            $ref: '#/components/schemas/UserProfile'
+                  
+  #     responses:
+  #       200:
+  #         description: Ok, user successfully updated
+  #         content:
+  #           application/json:
+  #             schema:
+  #             example:
+  #               {
+  #                 'id': 3,
+  #                 'email': 'hankvogt@gmail.com',
+  #                 'phone_number': '08093726483',
+  #                 'created_at': '2020-11-07T07:02:17.684+01:00',
+  #                 'updated_at': '2020-11-07T07:39:51.049+01:00',
+  #                 'profile':
+  #                   {
+  #                     'id': 2,
+  #                     'first_name': 'Hank',
+  #                     'last_name': 'Vogt',
+  #                     'other_name': 'Leroy',
+  #                     'gender': 'male',
+  #                     'disability': 'no',
+  #                     'age': null,
+  #                     'role': 'user',
+  #                     'user_id': 3,
+  #                     'state': 'Akansas',
+  #                     'lga': 'oaky',
+  #                     'ward': 'ward 3',
+  #                     'polling_unit': 'oak',
+  #                     'created_at': '2020-11-07T07:02:17.698+01:00',
+  #                     'updated_at': '2020-11-07T07:41:39.305+01:00',
+  #                     'photo':
+  #                       {
+  #                         'id': 1,
+  #                         'url': 'https://ik.imagekit.io/trsuszcduc/dangiwa/users/cam3_XxM38k9-i.jpeg',
+  #                         'file_id': '5fa63b26dae0113f445f5998',
+  #                         'thumbnail_url': 'https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/dangiwa/users/cam3_XxM38k9-i.jpeg',
+  #                         'created_at': '2020-11-07T07:14:38.976+01:00',
+  #                         'updated_at': '2020-11-07T07:14:38.976+01:00',
+  #                       },
+  #                   },
+  #               }
+
+  #       404:
+  #         description: User not found
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/CustomError"
+
+  #       500:
+  #         description: Internal Server Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+
+  #   delete:
+  #     security:
+  #       - bearerAuth: []
+  #     tags:
+  #       - Users
+  #     summary: Deletes a user from the database
+  #     description: >
+  #       Deletes a customer, vendor, or agent from the database using their id. Only a user with admin privileges is authorized to perform this operation.
+  #     operationId: deleteUserById
+  #     responses:
+  #       200:
+  #         description: Ok, user successfully deleted
+  #       404:
+  #         description: User not found
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+
+  #       500:
+  #         description: Internal Server Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  # /users/{id}/change-photo:
+  #   parameters:
+  #     - $ref: "#/components/parameters/idParam"
+  #   put:
+  #     security:
+  #       - bearerAuth: []
+  #     tags:
+  #       - Users
+  #     summary: Updates a user profile photo
+  #     description: >
+  #       Updates a user profile photo based on their id. 
+  #     operationId: changeProfilePicture
+  #     requestBody:
+  #       content:
+  #         multipart/form-data:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               photo:
+  #                 type: string
+  #                 format: binary
+  #     responses:
+  #       200:
+  #         description: Ok, user profile photo successfully updated
+  #         content:
+  #           application/json:
+  #             schema:
+  #             example:
+  #               {
+  #                 'id': 1,
+  #                 'url': 'https://ik.imagekit.io/trsuszcduc/dangiwa/users/cam3_XxM38k9-i.jpeg',
+  #                 'file_id': '5fa63b26dae0113f445f5998',
+  #                 'thumbnail_url': 'https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/dangiwa/users/cam3_XxM38k9-i.jpeg',
+  #                 'created_at': '2020-11-07T07:14:38.976+01:00',
+  #                 'updated_at': '2020-11-07T07:14:38.976+01:00',
+  #               }
+
+  #       404:
+  #         description: User not found
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/CustomError'
+
+  #       500:
+  #         description: Internal Server Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/Error'
+
+  # /users/dangiwa:
+  #   get:
+  #     tags:
+  #       - Users
+  #     summary: Gets Dangiwa profile
+  #     description: >
+  #       It returns Dangiwa profile information
+  #     operationId: dangiwaProfile
+  #     responses:
+  #       200:
+  #         description: Dangiwa's profile information
+  #         content:
+  #           application/json:
+  #             schema:
+  #               example:
+  #                 {
+  #                   "id": 1,
+  #                   "first_name": "John",
+  #                   "last_name": "Doe",
+  #                   "other_names": "Evans",
+  #                   "title": "Engr",
+  #                   "workplace": "Arise",
+  #                   "position": "MD",
+  #                   "role": "admin",
+  #                   "user_id": 1,
+  #                   "about": "_**Lorem **_ipsum _++dolor sit++_ amet consectetur adipisicing elit. Quisquam deserunt aspernatur repellat harum ut accusantium magni optio temporibus, corrupti id suscipit ipsum in, natus eius? **Ut totam magnam eum molestiae!**",
+  #                   "about_us": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident harum ratione architecto, voluptas dignissimos fuga cum quibusdam eos sequi ipsam eum! Error hic fugiat voluptatum odit, architecto laudantium maiores ab.\n\n_**Lorem ipsum dolor sit amet, consectetur **_adipisicing elit. Provident harum ratione architecto, voluptas dignissimos fuga cum quibusdam eos sequi ipsam eum! Error hic fugiat voluptatum odit, architecto laudantium maiores ab.\n\nLorem ipsum dolor sit amet,++** consectetur adipisicing**++ elit. Provident harum ratione architecto, voluptas dignissimos fuga cum quibusdam eos sequi ipsam eum! Error hic fugiat voluptatum odit, architecto laudantium maiores ab.",
+  #                   "education": [
+  #                       {
+  #                           "school": "Springlight Primary School",
+  #                           "qualifications": "First School Leaving Certificate",
+  #                           "from": "1981",
+  #                           "to": "1987"
+  #                       }
+  #                   ],
+  #                   "mission": "_**Lorem **__\\_ipsum _++dolor sit++\\_ amet consectetur adipisicing elit. Quisquam deserunt aspernatur repellat harum ut accusantium magni optio temporibus, corrupti id suscipit ipsum in, natus eius? **Ut totam magnam eum molestiae!**",
+  #                   "vision": "_**Lorem **__\\_ipsum _++dolor sit++\\_ amet consectetur adipisicing elit. Quisquam deserunt aspernatur repellat harum ut accusantium magni optio temporibus, corrupti id suscipit ipsum in, natus eius? **Ut totam magnam eum molestiae!**",
+  #                   "created_at": "2020-11-15T10:25:12.458+01:00",
+  #                   "updated_at": "2020-11-15T11:43:49.041+01:00"
+  #                 }
+  #       404:
+  #         description: No profile found 
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+
+  #       500:
+  #         description: Internal Server Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+
+  #News
+  # /news:
+  #   get:
+  #     tags:
+  #       - News
+  #     summary: Paginated list of news
+  #     description: >
+  #       Returns a paginated list of news available, comments,and likes on the news
+  #       and also the users who made the comments.
+  #     operationId: listNews
+  #     parameters:
+  #       - $ref: "#/components/parameters/limitParam"
+  #       - $ref: "#/components/parameters/pageParam"
+  #     responses:
+  #       200:
+  #         description: Ok, successful request
+  #         content:
+  #           application/json:
+  #             schema:
+  #               example:
+  #                 {
+  #                   "meta": {
+  #                       "total": 9,
+  #                       "per_page": 10,
+  #                       "current_page": 1,
+  #                       "last_page": 1,
+  #                       "first_page": 1,
+  #                       "first_page_url": "/?page=1",
+  #                       "last_page_url": "/?page=1",
+  #                       "next_page_url": null,
+  #                       "previous_page_url": null
+  #                    },
+  #                    "data":[
+  #                       {
+  #                         "id": 6,
+  #                         "title": "This is new title",
+  #                         "description": "Qui itaque fugiat odio quibusdam necessitatibus. Molestias debitis corrupti non et harum enim. Ut sunt pariatur eum consectetur.\n \rEt eum et quo facere. Ut repellendus perferendis quo temporibus aut provident. Voluptatem maxime facilis repudiandae quo asperiores. Facere quod corporis ducimus est dignissimos laboriosam. Doloremque ab eum unde rerum minima delectus nobis debitis quo. Impedit sit autem aut consequuntur a aperiam esse laborum.",
+  #                         "category": "general",
+  #                         "created_at": "2020-11-15T18:55:17.966+01:00",
+  #                         "updated_at": "2020-11-15T23:41:30.785+01:00",
+  #                         "is_visible": true,
+  #                         "total_comments": 5,
+  #                         "total_likes": 0,
+  #                         "coverImage":{
+  #                           "id": 12,
+  #                           "url": "https://ik.imagekit.io/trsuszcduc/dangiwa/news/photos/cat6_RXSeK9Ma5.jpg",
+  #                           "file_id": "5fb1aeb232c9df1ac9c77bc1",
+  #                           "thumbnail_url": "https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/dangiwa/news/photos/cat6_RXSeK9Ma5.jpg",
+  #                           "is_gallery": false,
+  #                           "title": null,
+  #                           "description": null,
+  #                           "profile_id": null,
+  #                           "project_id": null,
+  #                           "news_id": 6,
+  #                           "created_at": "2020-11-15T23:41:30.796+01:00",
+  #                           "updated_at": "2020-11-15T23:41:30.796+01:00"
+  #                         },
+  #                         "likes": [],
+  #                         "comments":[
+  #                           {
+  #                             "id": 21,
+  #                             "comment": "Soluta nisi odio dolorum earum commodi itaque quos ut. Voluptatibus exercitationem laudantium adipisci dolores. Quos possimus et fuga aut ipsam odio qui. Est aut earum reiciendis est.",
+  #                             "user_id": 23,
+  #                             "project_id": null,
+  #                             "news_id": 6,
+  #                             "created_at": "2020-11-15T18:55:18.050+01:00",
+  #                             "updated_at": "2020-11-15T18:55:18.050+01:00",
+  #                             'commentor':
+  #                                   {
+  #                                     'id': 23,
+  #                                     'email': 'Roslyn_Hahn@gmail.com',
+  #                                     'phone_number': '956.689.7083 x45382',
+  #                                     'created_at': '2020-11-15T18:55:18.002+01:00',
+  #                                     'updated_at': '2020-11-15T18:55:18.003+01:00',
+  #                                   }
+  #                           }
+  #                         ]
+  #                       }
+  #                    ]
+  #                 }
+
+  #       500:
+  #         description: Internal Server Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  # /news/search:
+  #   get:
+  #     tags:
+  #       - News
+  #     summary: Paginated list of news matching search param
+  #     description: >
+  #       Returns a paginated list of news available, comments,and likes on the news
+  #       and also the users who made the comments.
+  #     operationId: searchNews
+  #     parameters:
+  #       - $ref: "#/components/parameters/limitParam"
+  #       - $ref: "#/components/parameters/pageParam"
+  #       - $ref: "#/components/parameters/searchTextParam"
+  #     responses:
+  #       200:
+  #         description: Ok, successful request
+  #         content:
+  #           application/json:
+  #             schema:
+  #               example:
+  #                 {
+  #                   "meta": {
+  #                       "total": 9,
+  #                       "per_page": 10,
+  #                       "current_page": 1,
+  #                       "last_page": 1,
+  #                       "first_page": 1,
+  #                       "first_page_url": "/?page=1",
+  #                       "last_page_url": "/?page=1",
+  #                       "next_page_url": null,
+  #                       "previous_page_url": null
+  #                    },
+  #                    "data":[
+  #                       {
+  #                         "id": 6,
+  #                         "title": "This is new title",
+  #                         "description": "Qui itaque fugiat odio quibusdam necessitatibus. Molestias debitis corrupti non et harum enim. Ut sunt pariatur eum consectetur.\n \rEt eum et quo facere. Ut repellendus perferendis quo temporibus aut provident. Voluptatem maxime facilis repudiandae quo asperiores. Facere quod corporis ducimus est dignissimos laboriosam. Doloremque ab eum unde rerum minima delectus nobis debitis quo. Impedit sit autem aut consequuntur a aperiam esse laborum.",
+  #                         "category": "general",
+  #                         "created_at": "2020-11-15T18:55:17.966+01:00",
+  #                         "updated_at": "2020-11-15T23:41:30.785+01:00",
+  #                         "is_visible": true,
+  #                         "total_comments": 5,
+  #                         "total_likes": 0,
+  #                         "coverImage":{
+  #                           "id": 12,
+  #                           "url": "https://ik.imagekit.io/trsuszcduc/dangiwa/news/photos/cat6_RXSeK9Ma5.jpg",
+  #                           "file_id": "5fb1aeb232c9df1ac9c77bc1",
+  #                           "thumbnail_url": "https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/dangiwa/news/photos/cat6_RXSeK9Ma5.jpg",
+  #                           "is_gallery": false,
+  #                           "title": null,
+  #                           "description": null,
+  #                           "profile_id": null,
+  #                           "project_id": null,
+  #                           "news_id": 6,
+  #                           "created_at": "2020-11-15T23:41:30.796+01:00",
+  #                           "updated_at": "2020-11-15T23:41:30.796+01:00"
+  #                         },
+  #                         "likes": [],
+  #                         "comments":[
+  #                           {
+  #                             "id": 21,
+  #                             "comment": "Soluta nisi odio dolorum earum commodi itaque quos ut. Voluptatibus exercitationem laudantium adipisci dolores. Quos possimus et fuga aut ipsam odio qui. Est aut earum reiciendis est.",
+  #                             "user_id": 23,
+  #                             "project_id": null,
+  #                             "news_id": 6,
+  #                             "created_at": "2020-11-15T18:55:18.050+01:00",
+  #                             "updated_at": "2020-11-15T18:55:18.050+01:00",
+  #                             'commentor':
+  #                                   {
+  #                                     'id': 23,
+  #                                     'email': 'Roslyn_Hahn@gmail.com',
+  #                                     'phone_number': '956.689.7083 x45382',
+  #                                     'created_at': '2020-11-15T18:55:18.002+01:00',
+  #                                     'updated_at': '2020-11-15T18:55:18.003+01:00',
+  #                                   }
+  #                           }
+  #                         ]
+  #                       }
+  #                    ]
+  #                 }
+
+  #       500:
+  #         description: Internal Server Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  # /news/{id}:
+  #   parameters:
+  #     - $ref: "#/components/parameters/idParam"
+  #   get:
+  #     tags:
+  #       - News
+  #     summary: Gets news by its id
+  #     description: >
+  #       Returns news, its comments, likes and users who liked and commented on it. 
+  #       A call to this endpoint isn't entirely necessary because the same data are
+  #       returned from this **/news** endpoint.
+  #     operationId: newsById
+  #     responses:
+  #       200:
+  #         description: >
+  #           Ok, successful. 
+  #         content:
+  #           application/json:
+  #             schema:
+  #              example:
+  #               {
+  #                 'id': 6,
+  #                 'title': 'This is new title',
+  #                 'description': "Qui itaque fugiat odio quibusdam necessitatibus. Molestias debitis corrupti non et harum enim. Ut sunt pariatur eum consectetur.\n \rEt eum et quo facere. Ut repellendus perferendis quo temporibus aut provident. Voluptatem maxime facilis repudiandae quo asperiores. Facere quod corporis ducimus est dignissimos laboriosam. Doloremque ab eum unde rerum minima delectus nobis debitis quo. Impedit sit autem aut consequuntur a aperiam esse laborum.",
+  #                 'category': 'general',
+  #                 'created_at': '2020-11-15T18:55:17.966+01:00',
+  #                 'updated_at': '2020-11-15T23:41:30.785+01:00',
+  #                 'is_visible': true,
+  #                 'total_comments': 5,
+  #                 'total_likes': 0,
+  #                 'coverImage':
+  #                   {
+  #                     'id': 12,
+  #                     'url': 'https://ik.imagekit.io/trsuszcduc/dangiwa/news/photos/cat6_RXSeK9Ma5.jpg',
+  #                     'file_id': '5fb1aeb232c9df1ac9c77bc1',
+  #                     'thumbnail_url': 'https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/dangiwa/news/photos/cat6_RXSeK9Ma5.jpg',
+  #                     'is_gallery': false,
+  #                     'title': null,
+  #                     'description': null,
+  #                     'profile_id': null,
+  #                     'project_id': null,
+  #                     'news_id': 6,
+  #                     'created_at': '2020-11-15T23:41:30.796+01:00',
+  #                     'updated_at': '2020-11-15T23:41:30.796+01:00',
+  #                   },
+  #                 'likes': [],
+  #                 'comments':
+  #                   [
+  #                     {
+  #                       'id': 21,
+  #                       'comment': 'Soluta nisi odio dolorum earum commodi itaque quos ut. Voluptatibus exercitationem laudantium adipisci dolores. Quos possimus et fuga aut ipsam odio qui. Est aut earum reiciendis est.',
+  #                       'user_id': 23,
+  #                       'project_id': null,
+  #                       'news_id': 6,
+  #                       'created_at': '2020-11-15T18:55:18.050+01:00',
+  #                       'updated_at': '2020-11-15T18:55:18.050+01:00',
+  #                       'commentor':
+  #                         {
+  #                           'id': 23,
+  #                           'email': 'Roslyn_Hahn@gmail.com',
+  #                           'phone_number': '956.689.7083 x45382',
+  #                           'created_at': '2020-11-15T18:55:18.002+01:00',
+  #                           'updated_at': '2020-11-15T18:55:18.003+01:00',
+  #                         },
+  #                     },
+  #                   ],
+  #               }
+  #       404:
+  #         description: No users found matching the id parameter
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+
+  #       500:
+  #         description: Internal Server Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+
+ 
   # Pictures routes
-  /images:
-    get:
-      tags:
-        - Gallery
-      summary: Gets list of paginated pictures in the gallery
-      description: >
-        Returns the list of pictures in the gallery
-      operationId: listPictures
-      parameters:
-        - $ref: "#/components/parameters/limitParam"
-        - $ref: "#/components/parameters/pageParam"
-      responses:
-        200:
-          description: Ok, successful request
-          content:
-            application/json:
-              schema:
-                example:
-                  {
-                    "meta": {
-                    "total": 9,
-                    "per_page": 10,
-                    "current_page": 1,
-                    "last_page": 1,
-                    "first_page": 1,
-                    "first_page_url": "/?page=1",
-                    "last_page_url": "/?page=1",
-                    "next_page_url": null,
-                    "previous_page_url": null
-                   },
-                   "data":[
-                     {
-                      "id": 21,
-                      "url": "https://ik.imagekit.io/trsuszcduc/dangiwa/gallery/photos/dog3_qVnDyXHXP.jpg",
-                      "file_id": "5fb2512c32c9df1ac9cc2442",
-                      "thumbnail_url": "https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/dangiwa/gallery/photos/dog3_qVnDyXHXP.jpg",
-                      "is_gallery": true,
-                      "title": "Cats",
-                      "description": "Two happy buddies",
-                      "profile_id": null,
-                      "project_id": null,
-                      "news_id": null,
-                      "created_at": "2020-11-16T11:14:44.786+01:00",
-                      "updated_at": "2020-11-16T12:04:54.783+01:00"
-                    },
-                   ]
-                  }
+  # /images:
+  #   get:
+  #     tags:
+  #       - Gallery
+  #     summary: Gets list of paginated pictures in the gallery
+  #     description: >
+  #       Returns the list of pictures in the gallery
+  #     operationId: listPictures
+  #     parameters:
+  #       - $ref: "#/components/parameters/limitParam"
+  #       - $ref: "#/components/parameters/pageParam"
+  #     responses:
+  #       200:
+  #         description: Ok, successful request
+  #         content:
+  #           application/json:
+  #             schema:
+  #               example:
+  #                 {
+  #                   "meta": {
+  #                   "total": 9,
+  #                   "per_page": 10,
+  #                   "current_page": 1,
+  #                   "last_page": 1,
+  #                   "first_page": 1,
+  #                   "first_page_url": "/?page=1",
+  #                   "last_page_url": "/?page=1",
+  #                   "next_page_url": null,
+  #                   "previous_page_url": null
+  #                  },
+  #                  "data":[
+  #                    {
+  #                     "id": 21,
+  #                     "url": "https://ik.imagekit.io/trsuszcduc/dangiwa/gallery/photos/dog3_qVnDyXHXP.jpg",
+  #                     "file_id": "5fb2512c32c9df1ac9cc2442",
+  #                     "thumbnail_url": "https://ik.imagekit.io/trsuszcduc/tr:n-media_library_thumbnail/dangiwa/gallery/photos/dog3_qVnDyXHXP.jpg",
+  #                     "is_gallery": true,
+  #                     "title": "Cats",
+  #                     "description": "Two happy buddies",
+  #                     "profile_id": null,
+  #                     "project_id": null,
+  #                     "news_id": null,
+  #                     "created_at": "2020-11-16T11:14:44.786+01:00",
+  #                     "updated_at": "2020-11-16T12:04:54.783+01:00"
+  #                   },
+  #                  ]
+  #                 }
 
-        500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /videos:
-    get:
-      tags:
-         - Gallery
-      summary: Gets list of paginated videos in the gallery
-      description: >
-        Returns the list of pictures in the gallery
-      operationId: listVideos
-      parameters:
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/pageParam'
-      responses:
-          200:
-            description: Ok, successful request
-            content:
-              application/json:
-                schema:
-                  example:
-                    {
-                      'meta':
-                        {
-                          'total': 9,
-                          'per_page': 10,
-                          'current_page': 1,
-                          'last_page': 1,
-                          'first_page': 1,
-                          'first_page_url': '/?page=1',
-                          'last_page_url': '/?page=1',
-                          'next_page_url': null,
-                          'previous_page_url': null,
-                        },
-                      'data':
-                        [
-                          {
-                            'id': 2,
-                            'youtube_url': null,
-                            'vimeo_video_id': '480203411',
-                            'vimeo_uri': '/videos/480203411',
-                            'is_vimeo': true,
-                            'is_youtube': null,
-                            'title': 'Reactjs Intro',
-                            'description': 'Reactjs intro description',
-                            'created_at': '2020-11-17T09:13:28.048+01:00',
-                            'updated_at': '2020-11-17T09:13:28.048+01:00',
-                          }
+  #       500:
+  #         description: Internal Server Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  # /videos:
+  #   get:
+  #     tags:
+  #        - Gallery
+  #     summary: Gets list of paginated videos in the gallery
+  #     description: >
+  #       Returns the list of pictures in the gallery
+  #     operationId: listVideos
+  #     parameters:
+  #       - $ref: '#/components/parameters/limitParam'
+  #       - $ref: '#/components/parameters/pageParam'
+  #     responses:
+  #         200:
+  #           description: Ok, successful request
+  #           content:
+  #             application/json:
+  #               schema:
+  #                 example:
+  #                   {
+  #                     'meta':
+  #                       {
+  #                         'total': 9,
+  #                         'per_page': 10,
+  #                         'current_page': 1,
+  #                         'last_page': 1,
+  #                         'first_page': 1,
+  #                         'first_page_url': '/?page=1',
+  #                         'last_page_url': '/?page=1',
+  #                         'next_page_url': null,
+  #                         'previous_page_url': null,
+  #                       },
+  #                     'data':
+  #                       [
+  #                         {
+  #                           'id': 2,
+  #                           'youtube_url': null,
+  #                           'vimeo_video_id': '480203411',
+  #                           'vimeo_uri': '/videos/480203411',
+  #                           'is_vimeo': true,
+  #                           'is_youtube': null,
+  #                           'title': 'Reactjs Intro',
+  #                           'description': 'Reactjs intro description',
+  #                           'created_at': '2020-11-17T09:13:28.048+01:00',
+  #                           'updated_at': '2020-11-17T09:13:28.048+01:00',
+  #                         }
 
-                        ],
-                    }
+  #                       ],
+  #                   }
 
-          500:
-            description: Internal Server Error
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+  #         500:
+  #           description: Internal Server Error
+  #           content:
+  #             application/json:
+  #               schema:
+  #                 $ref: '#/components/schemas/Error'
 
   # # Image routes
   # /images1:
@@ -1327,96 +2062,6 @@ components:
         user_name:
           description: readonly property
           type: string
-    Business:
-      type: object
-      description: Represents the shop/business/services of a vendor
-      properties:
-        id:
-          description: readonly property
-          type: integer
-          format: int32
-        name:
-          type: string
-        location:
-          type: string
-        about:
-          type: string
-        verified:
-          type: boolean
-        suspended:
-          type: boolean
-        userId:
-          description: The id of the user this business/shop/service belongs to
-          type: integer
-          format: int32
-        business_type:
-          type: string
-          enum: ["restaurant", "agent", "chef", "farm_produce"]
-    Food:
-      type: object
-      description: Represents a dish or food item sold by a restaurant or farmer
-      properties:
-        id:
-          description: readonly property
-          type: integer
-          format: int32
-        name:
-          type: string
-        price:
-          type: number
-          format: float32
-        images:
-          type: array
-          items:
-            type: integer
-          minLength: 1
-          maxLength: 3
-        description:
-          type: string
-        businessId:
-          description: The id of the business entity this food belongs to
-          type: integer
-          format: int32
-        categoryId:
-          description: The id of the food category this dish or food item belongs to
-          type: integer
-          format: int32
-    Service:
-      type: object
-      description: Represents a service offered by a chef or freelancer
-      properties:
-        id:
-          description: readonly property
-          type: integer
-          format: int32
-        name:
-          type: string
-        charges:
-          type: number
-          format: float32
-        description:
-          type: string
-        images:
-          type: array
-          items:
-            type: integer
-          minLength: 1
-          maxLength: 3
-        businessId:
-          description: The id of the business entity this service belongs to
-          type: integer
-          format: int32
-    Suggestion:
-      type: object
-      description: Represents a suggestion point
-      properties:
-        id:
-          description: readonly property
-          type: integer
-          format: int32
-        suggestion:
-          type: string
-        
     Image:
       type: object
       description: Represents an image of a dish or food item
@@ -1444,30 +2089,6 @@ components:
           description: The id of the service (which involves preparing dishes) this image could belong to
           type: integer
           format: int32
-    Review:
-      type: object
-      description: Represents a review on a dish or food item
-      properties:
-        id:
-          description: readonly property
-          type: integer
-          format: int32
-        comment:
-          type: string
-        stars:
-          type: integer
-          format: int32
-        userId:
-          description: The id of the customer who dropped the review
-          type: string
-        foodId:
-          description: The id of the food item or dish this review could be meant for.
-          type: integer
-          format: int32
-        serviceId:
-          description: The id of the service (which involves preparing dishes) this review could be meant for.
-          type: integer
-          format: int32
     Order:
       type: object
       description: Represents an order from a customer
@@ -1491,23 +2112,6 @@ components:
         fulfilledAt:
           description: The time the ordered was fulfilled or completed
           type: string
-    Ingredient:
-      type: object
-      description: Represents an ingredient needed by a chef or freelancer to prepare a dish.
-      properties:
-        id:
-          description: readonly property
-          type: integer
-          format: int32
-        name:
-          type: string
-        description:
-          type: string
-        busineesId:
-          description: The business/service-provider this ingredient belongs or that added this ingredient to the database
-          type: integer
-          format: int32
-    Payment:
     PaymentInfo:
       type: object
       description: >
@@ -1530,60 +2134,6 @@ components:
           type: string
         flutter_ref:
           type: string
-    CardPayment:
-      type: object
-      description: >
-        Represents the specific information needed to make payments using bank cards.
-      required:
-        - card_number
-        - cvv
-        - expiry_month
-        - expiry_year
-        - pin
-      allOf:
-        - $ref: "#/components/schemas/Payment"
-        - type: object
-          properties:
-            card_number:
-              type: string
-            cvv:
-              type: string
-            expiry_month:
-              type: string
-            expiry_year:
-              type: string
-            pin:
-              type: string
-    BankPayment:
-      type: object
-      description: >
-        Represents the specific information needed to make payments using bank accounts without card information.
-      required:
-        - account_bank
-        - account_number
-      allOf:
-        - $ref: "#/components/schemas/Payment"
-        - type: object
-          properties:
-            account_bank:
-              description: >
-                This is a special number that identifies a customer's bank. A list of these numbers can be obtained using flutterwave api.
-              type: string
-            account_number:
-              type: string
-    ProviderLogin:
-      type: object
-      description: Represents the data required to login or signs up a user using facebook or google
-      required:
-        - provider
-        - token
-      properties:
-        provider:
-          type: string
-          enum: ["facebook", "google"]
-        token:
-          description: facebook access_token or google id_token
-          type: string
     Token:
       type: object
       required:
@@ -1595,15 +2145,6 @@ components:
         role:
           type: string
           enum: ["anonymous", "vendor", "agent", "admin", "customer"]
-    HealthTip:
-      type: object
-      required:
-        - tip
-      properties:
-        id:
-          type: integer
-        tip:
-          type: string
     Error:
       type: object
       description: Represents error
@@ -1662,220 +2203,6 @@ components:
         delivery:
           type: string
           enum: ["pickup", "home_delivery"]
-    Services:
-      type: array
-      items:
-        allOf:
-          - $ref: "#/components/schemas/Service"
-          - type: object
-            properties:
-              images:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Image"
-              reviews:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Review"
-    Reviews:
-      type: array
-      items:
-        $ref: "#/components/schemas/ReviewWithRelations"
-    ServicesWithIngredients:
-      type: array
-      items:
-        allOf:
-          - $ref: "#/components/schemas/Service"
-          - type: object
-            properties:
-              images:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Image"
-              ingredients:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Ingredient"
-              reviews:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Review"
-    ReviewWithRelations:
-      type: object
-      allOf:
-        - $ref: "#/components/schemas/Review"
-        - type: object
-          properties:
-            reviewed_food:
-              allOf:
-                - $ref: "#/components/schemas/Food"
-                - type: object
-                  properties:
-                    category:
-                      $ref: "#/components/schemas/Category"
-                    images:
-                      type: array
-                      items:
-                        $ref: "#/components/schemas/Image"
-            reviewed_service:
-              allOf:
-                - $ref: "#/components/schemas/Service"
-                - type: object
-                  properties:
-                    images:
-                      type: array
-                      items:
-                        $ref: "#/components/schemas/Image"
-            reviewer:
-              type: object
-              properties:
-                id:
-                  type: integer
-                email:
-                  type: string
-    Foods:
-      type: array
-      items:
-        allOf:
-          - $ref: "#/components/schemas/Food"
-          - type: object
-            properties:
-              category:
-                $ref: "#/components/schemas/Category"
-              images:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Image"
-              reviews:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Review"
-    FoodsOnly:
-      type: array
-      items:
-        allOf:
-          - $ref: "#/components/schemas/Food"
-          - type: object
-            properties:
-              images:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Image"
-    FoodWithReviewer:
-      type: object
-      allOf:
-        - $ref: "#/components/schemas/Food"
-        - type: object
-          properties:
-            business:
-              $ref: "#/components/schemas/BusinessWithOwner"
-            category:
-              $ref: "#/components/schemas/Category"
-            images:
-              type: array
-              items:
-                $ref: "#/components/schemas/Image"
-            reviews:
-              type: array
-              items:
-                allOf:
-                  - $ref: "#/components/schemas/Review"
-                  - type: object
-                    properties:
-                      reviewer:
-                        type: object
-                        description: The customer that reviewed the item
-                        properties:
-                          id:
-                            type: integer
-                          email:
-                            type: string
-    ServiceWithReviewer:
-      type: object
-      allOf:
-        - $ref: "#/components/schemas/Food"
-        - type: object
-          properties:
-            business:
-              $ref: "#/components/schemas/BusinessWithOwner"
-            ingredients:
-              $ref: "#/components/schemas/Ingredient"
-            images:
-              type: array
-              items:
-                $ref: "#/components/schemas/Image"
-            reviews:
-              type: array
-              items:
-                allOf:
-                  - $ref: "#/components/schemas/Review"
-                  - type: object
-                    properties:
-                      reviewer:
-                        type: object
-                        description: The customer that reviewed the item
-                        properties:
-                          id:
-                            type: integer
-                          email:
-                            type: string
-    ReviewsAndReviewer:
-      type: array
-      items:
-        allOf:
-          - $ref: "#/components/schemas/Review"
-          - type: object
-            properties:
-              reviewer:
-                type: object
-                description: The customer that reviewed the item
-                properties:
-                  id:
-                    type: integer
-                  email:
-                    type: string
-    BusinessWithOwner:
-      type: object
-      allOf:
-        - $ref: "#/components/schemas/Business"
-        - type: object
-          properties:
-            owner:
-              type: object
-              description: This is the owner of the business
-              properties:
-                id:
-                  type: integer
-                email:
-                  type: string
-    UserAndRelations:
-      type: object
-      description: Represents a user with all their possible relationships
-      properties:
-        id:
-          type: integer
-        email:
-          type: string
-        user_name:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        role:
-          type: string
-        address:
-          type: string
-        phone:
-          type: string
-        business:
-          $ref: "#/components/schemas/Business"
-        foods:
-          $ref: "#/components/schemas/Foods"
-        services:
-          $ref: "#/components/schemas/Services"
-        orders:
-          $ref: "#/components/schemas/Orders"
     PageInfo:
       type: object
       description: The meta data of a paginated result from the database
@@ -1885,48 +2212,89 @@ components:
           default: false
         nextCursor:
           type: string
-    PaginatedBusiness:
+    RiderProfile:
       type: object
-      description: Represents paginated list of businesses from the database
       properties:
-        data:
-          type: array
-          items:
-            $ref: "#/components/schemas/BusinessWithOwner"
-
-        pageInfo:
-          $ref: "#/components/schemas/PageInfo"
-    PaginatedFood:
+        email:
+          type: string
+        phoneNumber:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        address:
+          type: string
+        bvn:
+          type: string
+        profilePicture:
+          type: string
+          format: binary
+          
+    DriverProfile:
       type: object
-      description: >
-        Represents paginated list of dishes or food items from the database
       properties:
-        data:
-          $ref: "#/components/schemas/Foods"
-
-        pageInfo:
-          $ref: "#/components/schemas/PageInfo"
-    PaginatedServices:
+        email:
+          type: string
+        phoneNumber:
+          type: string
+        fullName:
+          type: string
+        bvn:
+          type: string
+          
+    DriverAddress:
       type: object
-      description: >
-        Represents paginated list of services from the database
       properties:
-        data:
-          $ref: "#/components/schemas/Services"
-
-        pageInfo:
-          $ref: "#/components/schemas/PageInfo"
-    PaginatedReviews:
+        state:
+          type: string
+        lga:
+          type: string
+        homeAddress:
+          type: string
+    DriverVehicle:
       type: object
-      description: >
-        Represents paginated list of reviews from the database
       properties:
-        data:
-          $ref: "#/components/schemas/Reviews"
+        vehicleType:
+          type: string
+        modelNumber:
+          type: string
+        plateNumber:
+          type: string
+        color:
+          type: string
+    Toggle:
+      type: object
+      required:
+        - latitude
+        - longitude
+      properties:
+        address:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
 
-        pageInfo:
-          $ref: "#/components/schemas/PageInfo"
-    
+    DriverDocuments:
+      type: object
+      properties:
+        birthCertificate.photo:
+              type: string
+              format: binary
+        profilePicture.photo:
+              type: string
+              format: binary
+        driverLicense.photo:
+              type: string
+              format: binary
+        utilityBill.photo:
+              type: string
+              format: binary
+        nationalID.photo:
+              type: string
+              format: binary
+
     UserProfile:
       type: object
       properties:
@@ -1938,12 +2306,9 @@ components:
           type: string
         lastName:
           type: string
-        otherName:
+        address:
           type: string
-        gender:
-          type: string
-          enum: ['male','female']
-        pollingUnit:
+        bvn:
           type: string
         age:
           type: integer
@@ -1959,7 +2324,52 @@ components:
           type: string
           format: binary
           
-
+    Trip:
+      type: object
+      properties:
+        distance:
+          type: integer
+          format: float32
+        price:
+          type: integer
+          format: float32
+        fromAddress:
+          type: string
+        toAddress:
+          type: string
+        geolocation.fromLocation.latitude:
+          type: integer
+          format: float32
+        geolocation.fromLocation.longitude:
+          type: integer
+          format: float32
+        geolocation.toLocation.latitude:
+          type: integer
+          format: float32
+        geolocation.toLocation.longitude:
+          type: integer
+          format: float32
+        vehicleSpecs.vehicleType:
+          type: string
+          enum: ['keke','bike']
+        vehicleSpecs.isCharter:
+          type: boolean
+          description: required if vehicleType field is **keke**
+        vehicleSpecs.isCarriage:
+          type: boolean
+          description: required if vehicleType field is **keke**
+        vehicleSpecs.numberOfSeats:
+          type: integer
+          description: required if isCharter field is **false**
+        vehicleSpecs.luggagePictures:
+          type: array
+          description: required if isCarriage field is **true**
+          items:
+            type: string
+            format: binary
+          maxLength: 4
+          minLength: 1
+          
 
     CustomError:
       type: object

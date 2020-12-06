@@ -29,6 +29,7 @@ class UserValidator {
         })
     }
     public validatePersonalData(ctx: HttpContextContract) {
+        // console.log('body', ctx.request.allFiles())
         return ctx.request.validate({
             schema: schema.create({
                 birthCertificate: schema.object().members({
@@ -95,7 +96,7 @@ class UserValidator {
                     rules.unique({ table: 'users', column: 'phone_number' })
                 ]),
                 fullName: schema.string.optional({ trim: true }),
-                address: schema.string.optional({ trim: true }),
+                // address: schema.string.optional({ trim: true }),
                 bvn: schema.string.optional({ trim: true }),
             }),
             messages

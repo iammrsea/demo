@@ -13,10 +13,10 @@ export default class Address extends BaseModel {
 
   @column()
   public homeAddress: string;
-  
-  @column()
+
+  @column({ serializeAs: null })
   public driverId: number;
-  
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

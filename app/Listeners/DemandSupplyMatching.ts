@@ -9,14 +9,13 @@ export default class DemandSupplyMatching {
             const trip = await Trip.query().where('id', tripId)
                 .preload('geolocation').firstOrFail();
             const { geolocation: { toLatitude: latitude, toLongitude: longitude } } = trip;
-
             const nearestDriver = await TripService.matchNearestDriver({ latitude, longitude }, tripId);
             //Check if driver's distance meets the threshold distance from rider;
             //If it meets the threshold, serialize the payload and notify the driver
             //Assumming it meets the threshold.
 
             //Send out notification to matched Driver
-            console.log('nearest driver from even', nearestDriver);
+            console.log('nest nearest driver from event', nearestDriver.toJSON());
             return tripId;
         } catch (error) {
             throw error;
@@ -44,6 +43,14 @@ export default class DemandSupplyMatching {
             console.log('notifying matched driver...', payload);
         } catch (error) {
             console.log('error notifying matched driver')
+        }
+    }
+    public async onTripCanceled(driverId: EventsList['trip:canceled']) {
+        try {
+            //Notify matched driver;
+            console.log('notifying driver that trip has been canceled...', driverId);
+        } catch (error) {
+            console.log('error notifying matched driver of canceled trip')
         }
     }
 }

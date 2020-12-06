@@ -9,4 +9,7 @@ export default () => {
         Route.post('trips/:id/start', 'TripsController.startTrip')
         Route.post('trips/:id/complete', 'TripsController.completeTrip')
     }).middleware(['auth']);
+    Route.resource('trips', 'TripsController')
+        .apiOnly()
+        .only(['index', 'destroy', 'show'])
 }

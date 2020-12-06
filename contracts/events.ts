@@ -31,6 +31,7 @@ declare module '@ioc:Adonis/Core/Event' {
     "iterate:trip:request:matching": number;
     "trip:maximum:rejections": Trip;
     "trip:accepted": Trip;
-    'trip:driver:matched': any
+    'trip:driver:matched': any;
+    'trip:canceled': number;
   }
 }

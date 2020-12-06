@@ -1,38 +1,55 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import UtilService from '../../../services/UtilService'
-import { USERS_FOLDER } from '../../../utils'
-import User from 'App/Models/User'
+import { USERS_FOLDER, CONSTANTS } from '../../../utils'
+// import User from 'App/Models/User'
 import ProfileImage from 'App/Models/ProfileImage'
 import UserValidator from '../../../services/validators/UserValidator';
+import Rider from 'App/Models/Rider'
 
 
 export default class RidersController {
-    public async index({ }: HttpContextContract) {
+    public async index({ request }: HttpContextContract) {
         try {
-            return User.query()
-                .where('role', 'rider')
-                .preload('rider', rider => rider.preload('profilePicture'))
+            let { page, limit } = request.all();
+            limit = limit > CONSTANTS.LIMIT || !limit ? CONSTANTS.LIMIT : limit;
+            page = page || 1;
+            const pagedRider = await Rider.query()
+                .preload('profilePicture')
+                .preload('userData')
+                .paginate(page, limit);
+
+            const { meta, data } = pagedRider.toJSON();
+            const riders = data.map(rider => {
+                const { email, role, phoneNumber } = rider.userData;
+                const serialized = rider.toJSON();
+                delete serialized.userData;
+                return { ...serialized, role, email, phone_number: phoneNumber }
+            })
+            return { meta, data: riders }
         } catch (error) {
             throw error
         }
     }
     public async updateRider(ctx: HttpContextContract) {
         try {
-            const { params } = ctx
             const payload = await UserValidator.validateUser(ctx)
-            const user = await User.query().where('id', params.id)
-                .preload('rider', rider => rider.preload('profilePicture')).firstOrFail();
+            const { id } = await UtilService.validateIdParam(ctx, 'riders')
+
+            const rider = await Rider.query().where('id', id)
+                .preload('profilePicture')
+                .preload('userData').firstOrFail();
+            const user = rider.userData;
 
             Object.keys(payload).filter(key => key !== 'profilePicture').forEach(key => {
                 if (key === 'phoneNumber' || key === 'email') {
                     user[key] = payload[key] as string;
                 } else {
-                    user.rider[key] = payload[key]
+                    rider[key] = payload[key]
                 }
             })
 
             if (!payload.profilePicture) {
-                return user.related('rider').updateOrCreate({ id: user.rider.id }, user.rider.toJSON());
+                return user.related('rider').updateOrCreate({ id: rider.id }, rider.toJSON());
             }
             const { thumbnailUrl, fileId, url } = await UtilService.savePhoto(
                 payload.profilePicture,
@@ -42,22 +59,26 @@ export default class RidersController {
             image.url = url
             image.thumbnailUrl = thumbnailUrl
             image.fileId = fileId
-            await user.rider.related('profilePicture').save(image)
-            return user
+            await rider.related('profilePicture').save(image)
+            await rider.preload('profilePicture');
+            const { email, phoneNumber, role } = rider.userData;
+            const updatedRider = rider.toJSON();
+            delete updatedRider.userData;
+            return { ...updatedRider, email, phone_number: phoneNumber, role };
         } catch (error) {
             throw error
         }
     }
     public async show(ctx: HttpContextContract) {
         try {
-            const { id } = await UtilService.validateIdParam(ctx, 'users');
-            return User.query()
-                .where('id', id)
-                .where('role', 'rider')
-                .preload('rider', rider => {
-                    rider.preload('profilePicture')
-                })
-                .firstOrFail()
+            const { id } = await UtilService.validateIdParam(ctx, 'riders');
+            const rider = await Rider.query().where('id', id)
+                .preload('profilePicture')
+                .preload('userData').firstOrFail();
+            const { email, phoneNumber, role } = rider.userData;
+            const serialized = rider.toJSON();
+            delete serialized.userData;
+            return { ...serialized, email, phone_number: phoneNumber, role }
         } catch (error) {
             throw error
         }
