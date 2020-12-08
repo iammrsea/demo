@@ -1,10 +1,10 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { schema } from '@ioc:Adonis/Core/Validator'
-import ImagekitProvider from '../../../services/ImageService'
-import UtilService from '../../../services/UtilService'
+import ImagekitProvider from 'App/Services/ImageService'
+import UtilService from 'App/Services/UtilService'
 import Hash from '@ioc:Adonis/Core/Hash'
 import CustomErrorException from 'App/Exceptions/CustomErrorException'
-import { messages, USERS_FOLDER } from '../../../utils'
+import { messages, USERS_FOLDER } from 'App/Utils'
 import User from 'App/Models/User'
 import ProfileImage from 'App/Models/ProfileImage'
 

@@ -23,10 +23,13 @@ Route.get("health", async ({ response }: HttpContextContract) => {
     throw error
   }
 });
+Route.get('/', async ({ view }) => {
+  return view.render('welcome')
+})
 //Home route
-Route.get("/", async ({ response }: HttpContextContract) => {
-  return response.redirect("api-docs");
-});
+// Route.get("/", async ({ response }: HttpContextContract) => {
+//   return response.redirect("api-docs");
+// });
 Route.group(() => {
   authRoutes();
   userRoutes();

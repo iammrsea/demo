@@ -1,9 +1,9 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import UtilService from '../../../services/UtilService'
-import { USERS_FOLDER, CONSTANTS } from '../../../utils'
+import UtilService from 'App/Services/UtilService'
+import { USERS_FOLDER, CONSTANTS } from 'App/Utils'
 // import User from 'App/Models/User'
 import ProfileImage from 'App/Models/ProfileImage'
-import UserValidator from '../../../services/validators/UserValidator';
+import UserValidator from 'App/Services/validators/UserValidator';
 import Rider from 'App/Models/Rider'
 
 

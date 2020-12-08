@@ -1,14 +1,13 @@
 import Event from '@ioc:Adonis/Core/Event';
 import { schema, rules } from '@ioc:Adonis/Core/Validator';
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
-import { CONSTANTS, CARRIAGE_FOLDER } from "../../../utils";
-import TripService from '../../../services/TripService'
-import UtilService from '../../../services/UtilService';
+import TripService from 'App/Services/TripService'
+import UtilService from 'App/Services/UtilService';
 import TripVehicleSpec from 'App/Models/TripVehicleSpec';
 import Database from '@ioc:Adonis/Lucid/Database';
 import Trip from 'App/Models/Trip';
 import TripGeolocation from 'App/Models/TripGeolocation';
-import { messages } from '../../../utils'
+import { messages, CONSTANTS, CARRIAGE_FOLDER } from 'App/Utils'
 
 export default class TripsController {
 

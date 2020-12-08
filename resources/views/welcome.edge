@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Websocket</title>
+</head>
+<body>
+    <h1>Websocket demo</h1>
+     {{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>  --}}
+<script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    socket.on('news', (data) => {
+      console.log(data);
+      socket.emit('my other event', { my: 'data' });
+    });
+    socket.on('id',(id)=>{
+      console.log(id);
+      socket.on(id,(value)=>{
+        console.log('configured for me')
+      })
+    })
+  </script>
+</body>
+</html>

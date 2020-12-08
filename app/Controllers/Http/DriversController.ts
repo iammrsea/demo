@@ -1,8 +1,8 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import UtilService from '../../../services/UtilService'
-import { USERS_FOLDER, DRIVERS_DOCUMENT_FOLDER, CONSTANTS } from '../../../utils'
-import DriverService from '../../../services/DriverService'
-import UserValidator from '../../../services/validators/UserValidator'
+import { USERS_FOLDER, DRIVERS_DOCUMENT_FOLDER, CONSTANTS } from "App/Utils"
+import DriverService from 'App/Services/DriverService'
+import UtilService from 'App/Services/UtilService'
+import UserValidator from 'App/Services/validators/UserValidator'
 import Vehicle from 'App/Models/Vehicle'
 import Driver from 'App/Models/Driver'
 
