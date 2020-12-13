@@ -7,5 +7,6 @@ export { default as tokenRoutes } from "./tokens";
 export { default as tripRoutes } from './trips';
 export { default as riderRoutes } from './riders';
 export { default as driverRoutes } from './drivers';
+export { default as transactionRoutes } from './transcations';
 
 
