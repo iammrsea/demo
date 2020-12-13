@@ -3,6 +3,8 @@ import { schema, rules } from '@ioc:Adonis/Core/Validator';
 import { messages } from "App/Utils";
 import ImageService from './ImageService';
 import _ from 'lodash';
+import User from 'App/Models/User';
+import Rider from 'App/Models/Rider';
 
 class UtilService {
     public validateIdParam({ request, params }: HttpContextContract, tableName: string) {
@@ -40,6 +42,21 @@ class UtilService {
             return obj;
         }
         throw new TypeError('Can only accept a string or object data type');
+    }
+    public async fakeRider() {
+        const user = new User();
+        user.email = 'rider1@gmail.com';
+        user.password = 'password';
+        user.phoneNumber = '09035284938'
+        user.role = 'rider';
+
+        const rider = new Rider();
+        rider.firstName = 'test_firstname';
+        rider.lastName = 'test_lastname';
+
+        await user.related('rider').save(rider);
+        return { ...user.toJSON(), password: 'password' };
+
     }
     // public searchNews(page:number,limit:number,searchTerm) {
     //     const sql =

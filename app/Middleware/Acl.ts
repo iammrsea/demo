@@ -2,14 +2,12 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { AuthenticationException } from '@adonisjs/auth/build/standalone'
 import User from 'App/Models/User'
 export default class Acl {
-  public async handle (
+  public async handle(
     { params, auth }: HttpContextContract,
     next: () => Promise<void>,
     acls: string[]
   ) {
     const user = auth.user as User
-    await user.preload('profile');
-    await user.preload('dangiwaProfile')
     const id = params.id;
     let allow = false
     for (let i = 0; i < acls.length; i++) {
@@ -29,25 +27,19 @@ export default class Acl {
     allow ? await next() : this.throwError('Unauthorized Access')
   }
 
-  private throwError (message: string) {
+  private throwError(message: string) {
     throw new AuthenticationException(message, '401')
   }
   private isAdmin(user: User) {
-    const { profile, dangiwaProfile } = user;
-    if (profile) {
-      return profile.role === 'admin';
-    }
-    if (dangiwaProfile) {
-      return dangiwaProfile.role === 'admin'
-    }
-    return false
+    const { role } = user;
+    return role === 'admin';
   }
   private isOwner(user: User, userId: number) {
     // console.log('userId',+userId, user.id)
     return user.id === +userId
   }
-  private async canDelete (authUser: User, userId: number): Promise<boolean> {
-    const { profile:{role}, id } = authUser
+  private async canDelete(authUser: User, userId: number): Promise<boolean> {
+    const { role, id } = authUser
     if (role !== 'admin') return false
     if (role === 'admin' && id === userId) return true
     if (role === 'admin') return true
