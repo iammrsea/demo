@@ -8,7 +8,7 @@
 import Env from '@ioc:Adonis/Core/Env'
 import { OrmConfig } from '@ioc:Adonis/Lucid/Orm'
 import { DatabaseConfig } from '@ioc:Adonis/Lucid/Database'
-import  Application  from '@ioc:Adonis/Core/Application';
+import Application from '@ioc:Adonis/Core/Application';
 
 const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
   /*
@@ -37,7 +37,7 @@ const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
     */
     pg: {
       client: 'pg',
-   //  connection: !Application.inProduction
+      //  connection: !Application.inProduction
       //   ? Env.get("DATABASE_URL") + "?ssl=no-verify"
       //   : {
       //       host: Env.get("DB_HOST", "127.0.0.1") as string,
@@ -47,21 +47,29 @@ const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
       //       database: Env.get("DB_NAME", "lucid") as string,
       //     },
       connection: Application.inProduction ?
-      Env.get('DATABASE_URL') + "?ssl=no-verify":
-      {
-        host: Env.get('PG_HOST'),
-        port: Env.get('PG_PORT'),
-        user: Env.get('PG_USER'),
-        password: Env.get('PG_PASSWORD', ''),
-        database: Env.get('PG_DB_NAME'),
-      },
-    
+        Env.get('DATABASE_URL') + "?ssl=no-verify" :
+        {
+          host: Env.get('PG_HOST'),
+          port: Env.get('PG_PORT'),
+          user: Env.get('PG_USER'),
+          password: Env.get('PG_PASSWORD', ''),
+          database: Env.get('PG_DB_NAME'),
+        },
+
       healthCheck: Application.inDev,
-			debug: Application.inDev,
+      debug: Application.inDev,
     },
     custom: {
       client: "pg",
       connection: Env.get("DATABASE_URL") + "?ssl=no-verify",
+    },
+    staging: {
+      client: "pg",
+      connection: Env.get("DATABASE_URL_STAGING") + "?ssl=no-verify",
+    },
+    production: {
+      client: "pg",
+      connection: Env.get("DATABASE_URL_PROD") + "?ssl=no-verify",
     },
 
   },
