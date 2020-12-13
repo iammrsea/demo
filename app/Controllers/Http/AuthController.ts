@@ -1,6 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { schema, rules } from "@ioc:Adonis/Core/Validator";
-import { messages } from "../../../utils";
+import { messages } from "App/Utils";
 import User from 'App/Models/User';
 import Driver from 'App/Models/Driver';
 import Rider from 'App/Models/Rider';
