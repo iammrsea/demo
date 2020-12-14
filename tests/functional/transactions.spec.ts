@@ -20,7 +20,6 @@ test.group('transactions tests', (group) => {
         const { body: { token } } = await supertest(BASE_URL).post('/api/v1/auth/login')
             .send({ ...user })
             .accept('application/json')
-            .timeout(200)
             .expect(200);
         //Make an authenticated request
         const { body } = await supertest(BASE_URL).post('/api/v1/transactions/initialize')

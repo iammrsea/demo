@@ -3,6 +3,8 @@ import Database from '@ioc:Adonis/Lucid/Database';
 import Transaction from 'App/Models/Transaction';
 import TransactionService from 'App/Services/TransactionService';
 import { nanoid } from 'nanoid';
+import UtilService from 'App/Services/UtilService';
+
 
 test.group('transactions service tests', (group) => {
 
@@ -12,14 +14,14 @@ test.group('transactions service tests', (group) => {
     group.afterEach(async () => {
         await Database.rollbackGlobalTransaction();
     })
-    const userId = 5;
-    const role = 'rider';
+
 
     test('save transaction with only amount deposited field', async (assert) => {
+        const { riderId, role } = await UtilService.fakeRider();
         const transaction = new Transaction();
         transaction.amountDeposited = 6000;
         transaction.transactionRef = nanoid()
-        const result = await TransactionService.saveTransaction(transaction, role, userId);
+        const result = await TransactionService.saveTransaction(transaction, role, riderId);
         await result.preload('rider');
         const { id, transaction_ref, amount_deposited, amount_remitted, amount_withdrawn } = result.toJSON();
         assert.equal(amount_deposited, 6000);
@@ -31,10 +33,11 @@ test.group('transactions service tests', (group) => {
         assert.isDefined(result.rider.id);
     })
     test('save transaction with only amount widthdrawn field', async (assert) => {
+        const { riderId, role } = await UtilService.fakeRider();
         const transaction = new Transaction();
         transaction.amountWithdrawn = 6000;
         transaction.transactionRef = nanoid()
-        const result = await TransactionService.saveTransaction(transaction, role, userId);
+        const result = await TransactionService.saveTransaction(transaction, role, riderId);
         await result.preload('rider');
         const { id, transaction_ref, amount_deposited, amount_remitted, amount_withdrawn } = result.toJSON();
         assert.equal(amount_withdrawn, 6000);
@@ -46,10 +49,11 @@ test.group('transactions service tests', (group) => {
         assert.isDefined(result.rider.id);
     })
     test('save transaction with only amount remitted field', async (assert) => {
+        const { riderId, role } = await UtilService.fakeRider();
         const transaction = new Transaction();
         transaction.transactionRef = nanoid()
         transaction.amountRemitted = 6000;
-        const result = await TransactionService.saveTransaction(transaction, role, userId);
+        const result = await TransactionService.saveTransaction(transaction, role, riderId);
         await result.preload('rider');
         const { id, transaction_ref, amount_deposited, amount_remitted, amount_withdrawn } = result.toJSON();
         assert.isUndefined(amount_withdrawn);
@@ -61,12 +65,13 @@ test.group('transactions service tests', (group) => {
         assert.isDefined(result.rider.id);
     })
     test('save transaction with the three fields', async (assert) => {
+        const { riderId, role } = await UtilService.fakeRider();
         const transaction = new Transaction();
         transaction.transactionRef = nanoid()
         transaction.amountWithdrawn = 6000;
         transaction.amountDeposited = 5000;
         transaction.amountRemitted = 4000;
-        const result = await TransactionService.saveTransaction(transaction, role, userId);
+        const result = await TransactionService.saveTransaction(transaction, role, riderId);
         await result.preload('rider');
         const { id, transaction_ref, amount_deposited, amount_remitted, amount_withdrawn } = result.toJSON();
         assert.equal(amount_withdrawn, 6000);

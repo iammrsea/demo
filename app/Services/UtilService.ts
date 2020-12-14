@@ -5,6 +5,7 @@ import ImageService from './ImageService';
 import _ from 'lodash';
 import User from 'App/Models/User';
 import Rider from 'App/Models/Rider';
+import { nanoid } from 'nanoid';
 
 class UtilService {
     public validateIdParam({ request, params }: HttpContextContract, tableName: string) {
@@ -45,17 +46,19 @@ class UtilService {
     }
     public async fakeRider() {
         const user = new User();
-        user.email = 'rider1@gmail.com';
+        user.email = nanoid() + '@gmail.com';
         user.password = 'password';
-        user.phoneNumber = '09035284938'
+        user.phoneNumber = nanoid();
         user.role = 'rider';
 
         const rider = new Rider();
         rider.firstName = 'test_firstname';
         rider.lastName = 'test_lastname';
-
+        // console.log('transaction', trx)
         await user.related('rider').save(rider);
-        return { ...user.toJSON(), password: 'password' };
+        await user.preload('rider')
+        const { role, email, rider: { id: riderId } } = user;
+        return { email, role, riderId, password: 'password' };
 
     }
     // public searchNews(page:number,limit:number,searchTerm) {

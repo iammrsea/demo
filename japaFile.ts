@@ -25,4 +25,5 @@ function getTestFiles() {
 configure({
     files: getTestFiles(),
     before: [startHttpServer],
+    timeout: 5000
 })

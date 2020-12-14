@@ -19,7 +19,6 @@ test.group('authentication tests', (group) => {
         const { body } = await supertest(BASE_URL).post('/api/v1/auth/login')
             .send({ ...user })
             .accept('application/json')
-            .timeout(2000)
             .expect(200);
         // console.log('res', body);
         assert.property(body, 'token');
