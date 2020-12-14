@@ -3,4 +3,6 @@ langauge: node_js
 node_js:
   - node
 script:
-  yarn test
+  yarn test:coverage
+after_success:
+  yarn test:report

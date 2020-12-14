@@ -6,7 +6,9 @@
     "build": "node ace build --production",
     "start": "node build/server.js",
     "dev": "node ace serve --watch",
-    "test": "node -r  @adonisjs/assembler/build/register japaFile.ts"
+    "test": "node -r  @adonisjs/assembler/build/register japaFile.ts",
+    "test:coverage": "nyc node -r  @adonisjs/assembler/build/register japaFile.ts",
+    "test:report": "nyc report --reporter=text-lcov | coveralls"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^3.0.0",
@@ -16,10 +18,12 @@
     "@types/socket.io": "^2.1.11",
     "@types/supertest": "^2.0.10",
     "adonis-preset-ts": "^1.1.0",
+    "coveralls": "^3.1.0",
     "execa": "^5.0.0",
     "get-port": "^5.1.1",
     "japa": "^3.1.1",
     "jsdom": "^16.4.0",
+    "nyc": "^15.1.0",
     "pino-pretty": "^4.3.0",
     "supertest": "^6.0.1",
     "typescript": "^4.1.2",
