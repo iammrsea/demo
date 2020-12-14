@@ -8,16 +8,16 @@ export default class Transaction extends BaseModel {
   public id: number
 
   @column()
-  public amountDeposited?: number;
+  public amountDeposited: number;
 
   @column()
-  public amountWithdrawn?: number;
+  public amountWithdrawn: number;
 
   @column()
-  public amountRemitted?: number;
+  public amountRemitted: number;
 
   @column()
-  public transactionRef?: string;
+  public transactionRef: string;
 
   @column()
   public riderId: number;

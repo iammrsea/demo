@@ -82,4 +82,20 @@ test.group('transactions service tests', (group) => {
         assert.isDefined(result.rider);
         assert.isDefined(result.rider.id);
     })
+
+    test('update transaction instance', async (assert) => {
+        //Create transaction
+        const transaction = new Transaction();
+        transaction.amountDeposited = 3000;
+        transaction.transactionRef = nanoid();
+        await transaction.save()
+
+        const updated = await TransactionService.updateTransaction({
+            amountDeposited: 1000, amountRemitted: 1000,
+            amountWithdrawn: 2000, transactionRef: transaction.transactionRef
+        });
+        assert.equal(updated.amountDeposited, 4000);
+        assert.equal(updated.amountRemitted, 1000);
+        assert.equal(updated.amountWithdrawn, 2000);
+    })
 })

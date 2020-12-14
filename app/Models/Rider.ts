@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, belongsTo, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import ProfileImage from './ProfileImage';
 import User from './User';
+import Wallet from './Wallet';
 
 export default class Rider extends BaseModel {
   @column({ isPrimary: true })
@@ -30,6 +31,9 @@ export default class Rider extends BaseModel {
 
   @belongsTo(() => User)
   public userData: BelongsTo<typeof User>;
+
+  @hasOne(() => Wallet)
+  public wallet: HasOne<typeof Wallet>;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
