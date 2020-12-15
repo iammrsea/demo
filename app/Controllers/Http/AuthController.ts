@@ -69,7 +69,6 @@ export default class AuthController {
             await user.preload('driver');
             await user.preload('rider');
             const payload = token.toJSON();
-            console.log('id', user.driver.id)
             const user_id = token.user.driver?.id || token.user.rider?.id || token.user.id;
             const userToken = payload.token;
             const { phone_number, role, created_at } = token.user.toJSON();

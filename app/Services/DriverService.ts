@@ -17,7 +17,8 @@ class DriverService {
                         driverId: driver.id,
                         isOnline: true
                     });
-                    return bike.related('geolocation').updateOrCreate({}, location);
+                    await bike.related('geolocation').updateOrCreate({}, location);
+                    return { status: true, message: 'Vehicle online', data: { is_online: bike.isOnline, vehicle_type: 'bike' } }
                 case 'keke':
                     const tricycle = await OnlineTricycle.updateOrCreate({ driverId: driver.id }, {
                         inTransit: false,
@@ -25,9 +26,10 @@ class DriverService {
                         isOnline: true,
                         availableSeats: 4
                     })
-                    return tricycle.related('geolocation').updateOrCreate({}, location);
+                    await tricycle.related('geolocation').updateOrCreate({}, location);
+                    return { status: true, message: 'Vehicle online', data: { is_online: tricycle.isOnline, vehicle_type: 'keke' } }
                 default:
-                    return;
+                    return { status: false, message: 'Error occurred', data: {} };
             }
         } catch (error) {
             throw error;
@@ -40,13 +42,15 @@ class DriverService {
                 case 'bike':
                     const bike = await OnlineBike.findByOrFail('driver_id', user.driver.id);
                     bike.isOnline = false;
-                    return bike.save();
+                    await bike.save();
+                    return { status: true, message: 'Vehicle offline', data: { is_online: bike.isOnline, vehicle_type: 'bike' } }
                 case 'keke':
                     const tricycle = await OnlineTricycle.findByOrFail('driver_id', user.driver.id);
                     tricycle.isOnline = false;
-                    return tricycle.save();
+                    await tricycle.save();
+                    return { status: true, message: 'Vehicle offline', data: { is_online: tricycle.isOnline, vehicle_type: 'keke' } }
                 default:
-                    return;
+                    return { status: false, message: 'Error occurred', data: {} };;
             }
 
         } catch (error) {
