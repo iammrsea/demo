@@ -31,8 +31,7 @@ export default class Acl {
     throw new AuthenticationException(message, '401')
   }
   private isAdmin(user: User) {
-    const { role } = user;
-    return role === 'admin';
+    return user.role === 'admin'
   }
   private isOwner(user: User, userId: number) {
     // console.log('userId',+userId, user.id)

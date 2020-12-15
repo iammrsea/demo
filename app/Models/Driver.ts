@@ -6,6 +6,7 @@ import Vehicle from './Vehicle';
 // import { CherryPick } from "@ioc:Adonis/Lucid/Model";
 import ProfileImage from './ProfileImage';
 import User from './User';
+import Message from './Message';
 
 export default class Driver extends BaseModel {
   @column({ isPrimary: true })
@@ -37,6 +38,9 @@ export default class Driver extends BaseModel {
 
   @hasOne(() => Address)
   public address: HasOne<typeof Address>;
+
+  @hasMany(() => Message)
+  public messages: HasMany<typeof Message>;
 
   @hasOne(() => Vehicle)
   public vehicle: HasOne<typeof Vehicle>;

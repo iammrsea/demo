@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column, HasMany, hasMany, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import ProfileImage from './ProfileImage';
 import User from './User';
 import Wallet from './Wallet';
+import Message from './Message';
 
 export default class Rider extends BaseModel {
   @column({ isPrimary: true })
@@ -28,6 +29,9 @@ export default class Rider extends BaseModel {
 
   @hasOne(() => ProfileImage)
   public profilePicture: HasOne<typeof ProfileImage>;
+
+  @hasMany(() => Message)
+  public messages: HasMany<typeof Message>;
 
   @belongsTo(() => User)
   public userData: BelongsTo<typeof User>;

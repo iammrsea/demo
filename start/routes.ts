@@ -13,6 +13,7 @@ import {
   riderRoutes,
   driverRoutes,
   transactionRoutes,
+  messageRoutes,
 } from "./Routes/index";
 
 //Health route
@@ -39,7 +40,8 @@ Route.group(() => {
   tripRoutes();
   riderRoutes();
   driverRoutes();
-  transactionRoutes()
+  transactionRoutes();
+  messageRoutes();
   factoryRoutes();
   docRoutes();
 }).prefix("api/v1");
