@@ -56,7 +56,7 @@ test.group('transactions tests', (group) => {
         }
 
     })
-    test.only('Functional: make payment for a trip', async (assert) => {
+    test('Functional: make payment for a trip', async (assert) => {
 
         //Create a trip
         const trip = new Trip();
