@@ -5,6 +5,15 @@ export default class Payment extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
+  @column()
+  public amountDue: number;
+
+  @column()
+  public amountPaid: number;
+
+  @column()
+  public tripId: number;
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

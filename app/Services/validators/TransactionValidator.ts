@@ -15,6 +15,17 @@ class TransactionValidator {
             data: { amount }
         })
     }
+    public payment(tripId: number) {
+        return validator.validate({
+            schema: schema.create({
+                tripId: schema.number([
+                    rules.exists({ table: 'trips', column: 'id' })
+                ])
+            }),
+            data: { tripId },
+            messages
+        })
+    }
 }
 
 export default new TransactionValidator();

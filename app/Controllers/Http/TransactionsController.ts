@@ -1,5 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Payment from 'App/Models/Payment';
 import Transaction from 'App/Models/Transaction';
+import Trip from 'App/Models/Trip';
 import Wallet from 'App/Models/Wallet';
 import PaystackService from 'App/Services/PaystackService';
 import TransactionService from 'App/Services/TransactionService';
@@ -63,10 +65,41 @@ export default class TransactionsController {
             message: 'Verification successful',
             data: {
                 reference: params.reference,
-                is_transaction_successful: false,
+                is_transaction_successful: true,
                 previous_balance: user!.rider.wallet.balance,
                 current_balance: user!.rider.wallet.balance + amount,
             }
         }
+    }
+    public async payForTrip({ request, auth }: HttpContextContract) {
+        const { tripId } = request.all();
+        await TransactionValidator.payment(tripId);
+
+        //Retrieve the trip by its id
+        const trip = await Trip.findByOrFail('id', tripId);
+
+        const user = auth.user;
+        await user!.preload('rider', rider => rider.preload('wallet'));
+        const wallet = user!.rider.wallet;
+        await wallet.removeMoney(trip.price);
+
+        //Create payment
+        const payment = new Payment();
+        payment.amountDue = trip.price;
+        payment.amountPaid = trip.price;
+        payment.tripId = tripId;
+        await payment.save();
+
+        return {
+            status: true,
+            message: 'Payment successful',
+            data: {
+                previous_balance: wallet.balance + trip.price,
+                current_balance: wallet.balance,
+                trip_id: tripId
+            }
+        }
+
+
     }
 }

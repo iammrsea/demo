@@ -58,6 +58,9 @@ export default class Trip extends BaseModel {
   @hasOne(() => TripStatus)
   public status: HasOne<typeof TripStatus>;
 
+  @hasOne(() => Trip)
+  public payment: HasOne<typeof Trip>;
+
   @belongsTo(() => Driver)
   public driver: BelongsTo<typeof Driver>;
 
