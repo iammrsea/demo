@@ -10,8 +10,12 @@ export default () => {
         Route.get('bikes', 'DriversController.bikes')
         Route.get('tricycles', 'DriversController.tricycles')
         Route.get('vehicles', 'DriversController.vehicles')
-        Route.put('toggle-on', 'DriversController.switchOn').middleware(['auth']);
-        Route.put('toggle-off', 'DriversController.switchOff').middleware(['auth']);
+        Route.put('toggle-on', 'DriversController.switchOn')
+            .as('go-online')
+            .middleware(['auth']);
+        Route.put('toggle-off', 'DriversController.switchOff')
+            .as('go-offline')
+            .middleware(['auth']);
         Route.put(':id/change-photo', 'DriversController.changePhoto')
             .middleware([])
         Route.group(() => {
