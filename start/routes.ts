@@ -14,6 +14,7 @@ import {
   driverRoutes,
   transactionRoutes,
   messageRoutes,
+  reviewRoutes,
 } from "./Routes/index";
 
 //Health route
@@ -42,6 +43,7 @@ Route.group(() => {
   driverRoutes();
   transactionRoutes();
   messageRoutes();
+  reviewRoutes();
   factoryRoutes();
   docRoutes();
 }).prefix("api/v1");

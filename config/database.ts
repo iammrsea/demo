@@ -46,16 +46,7 @@ const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
       //       password: Env.get("DB_PASSWORD", "lucid") as string,
       //       database: Env.get("DB_NAME", "lucid") as string,
       //     },
-      connection: Application.inProduction || Application.nodeEnvironment === 'testing' ?
-        Env.get('DATABASE_URL') + "?ssl=no-verify" :
-        {
-          host: Env.get('PG_HOST'),
-          port: Env.get('PG_PORT'),
-          user: Env.get('PG_USER'),
-          password: Env.get('PG_PASSWORD', ''),
-          database: Env.get('PG_DB_NAME'),
-        },
-      // connection: Application.inProduction ?
+      // connection: Application.inProduction || Application.nodeEnvironment === 'testing' ?
       //   Env.get('DATABASE_URL') + "?ssl=no-verify" :
       //   {
       //     host: Env.get('PG_HOST'),
@@ -64,6 +55,15 @@ const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
       //     password: Env.get('PG_PASSWORD', ''),
       //     database: Env.get('PG_DB_NAME'),
       //   },
+      connection: Application.inProduction ?
+        Env.get('DATABASE_URL') + "?ssl=no-verify" :
+        {
+          host: Env.get('PG_HOST'),
+          port: Env.get('PG_PORT'),
+          user: Env.get('PG_USER'),
+          password: Env.get('PG_PASSWORD', ''),
+          database: Env.get('PG_DB_NAME'),
+        },
 
       healthCheck: Application.inDev,
       debug: Application.inDev,
