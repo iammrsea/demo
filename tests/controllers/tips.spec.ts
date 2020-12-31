@@ -24,7 +24,7 @@ test.group('trips tests', (group) => {
         await Database.rollbackGlobalTransaction();
     })
 
-    test.only('book a trip', async (assert) => {
+    test('book a trip', async (assert) => {
         //Assign device token to  online driver;
         const route = Route.makeUrl('register-token') as string;
         await supertest(BASE_URL).post(route)
