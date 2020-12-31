@@ -15,6 +15,7 @@ test.group('trips tests', (group) => {
         await Database.beginGlobalTransaction();
         const onlineDriver = await createDriverWithVehicle();
         const { user: { email, phoneNumber }, password } = onlineDriver;
+
         driverToken = await login({ email, phoneNumber, password });
         const rider = await createRider();
         riderToken = await login(rider);
@@ -33,7 +34,9 @@ test.group('trips tests', (group) => {
             })
             .accept('application/json')
             .expect(200)
-
+        // const driv = await Driver.query().where('id', body.driver_id)
+        //     .preload('token').firstOrFail();
+        // console.log('the driver is ', driv.toJSON())
         //Take driver online so that they would available for booking
         const goOnlineRoute = Route.makeUrl('go-online') as string;
         await supertest(BASE_URL).put(goOnlineRoute)

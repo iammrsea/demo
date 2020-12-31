@@ -62,6 +62,7 @@ export const createDriverWithVehicle = async () => {
     user.email = email;
     user.phoneNumber = phoneNumber;
     user.password = password;
+    user.role = 'driver'
 
     const driver = await user.related('driver').create({ verified: false, suspended: false, bvn: nanoid(), });
     const vehicle = new Vehicle();

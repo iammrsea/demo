@@ -33,5 +33,10 @@ declare module '@ioc:Adonis/Core/Event' {
     "trip:accepted": Trip;
     'trip:driver:matched': any;
     'trip:canceled': number;
+    "matched:driver:notified": boolean;
+    "trip:not-matched:sent": boolean;
+    "trip:accepted:sent": boolean;
+    "trip:not-accepted:sent": boolean;
+    "trip:rejected:sent": boolean;
   }
 }

@@ -1,4 +1,4 @@
-import Event from '@ioc:Adonis/Core/Event';
+import NotificationService from 'App/Services/NotificationService';
 import { schema, rules } from '@ioc:Adonis/Core/Validator';
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import TripService from 'App/Services/TripService'
@@ -8,6 +8,7 @@ import Database from '@ioc:Adonis/Lucid/Database';
 import Trip from 'App/Models/Trip';
 import TripGeolocation from 'App/Models/TripGeolocation';
 import { messages, CONSTANTS, CARRIAGE_FOLDER } from 'App/Utils'
+
 
 export default class TripsController {
 
@@ -65,16 +66,15 @@ export default class TripsController {
             trip.toAddress = toAddress;
             trip.riderId = user!.rider.id;
             trip.useTransaction(trx);
-            const savedTrip = await trip.related('status').create({ status: 'pending' });
+            const { tripId } = await trip.related('status').create({ status: 'pending' });
 
-            console.log('savedTrip', savedTrip.toJSON())
             //Create and save geolocation
             const geoLoc = new TripGeolocation();
             geoLoc.fromLatitude = geolocation.fromLocation.latitude;
             geoLoc.fromLongitude = geolocation.fromLocation.longitude;
             geoLoc.toLatitude = geolocation.toLocation.latitude;
             geoLoc.toLongitude = geolocation.toLocation.longitude;
-            geoLoc.tripId = savedTrip.id;
+            geoLoc.tripId = tripId;
             geoLoc.useTransaction(trx);
             await geoLoc.save();
 
@@ -84,7 +84,7 @@ export default class TripsController {
             spec.isCharter = isCharter;
             spec.numberOfSeats = numberOfSeats;
             spec.vehicleType = vehicleType;
-            spec.tripId = savedTrip.id;
+            spec.tripId = tripId;
             spec.useTransaction(trx);
             if (images && images.length) {
                 await spec.related('luggagePictures').createMany(images);
@@ -96,24 +96,25 @@ export default class TripsController {
             //Commit transaction
             await trx.commit();
 
-            // const matchedDriversBySpec = await TripService.matchTripRequestToDrivers(savedTrip.id);
+            // const matchedDriversBySpec = await TripService.matchTripRequestToDrivers(savedtripId);
             const { toLocation: { latitude: lat, longitude: long } } = geolocation;
             // const nearestMatches = GeoService.nearestVehicles({ latitude: +lat, longitude: +long }, 1, matchedDriversBySpec);
             // return nearestMatches.map(vehicle => {
-            //     return TripService.serializeMatchedVehicles(vehicle, savedTrip.id);
+            //     return TripService.serializeMatchedVehicles(vehicle, savedtripId);
             // });
-            const nearestDriver = await TripService.matchNearestDriver({ latitude: lat, longitude: long }, savedTrip.id);
+            const nearestDriver = await TripService.matchNearestDriver({ latitude: lat, longitude: long }, tripId);
             //Check if driver's distance meets the threshold distance from rider;
             //If it meets the threshold, serialize the payload and notify the driver
             //Assumming it meets the threshold.
             if (nearestDriver) {
-                const serializedTrip = await TripService.serializeTripForMatchedVehicle(nearestDriver, savedTrip.id);
-                console.log('trip', UtilService.toSnakeCase(serializedTrip));
+                const serializedTrip = await TripService.serializeTripForMatchedVehicle(nearestDriver, tripId);
                 //Notifiy matched driver
-                Event.emit('trip:driver:matched', serializedTrip);
-                return { is_matched: true, trip_id: trip.id }
+                const payload: any = UtilService.toSnakeCase(serializedTrip)
+                await NotificationService.sendNotificationPayload(payload);
+                // Event.emit('trip:driver:matched', UtilService.toSnakeCase(serializedTrip));
+                return { is_matched: true, trip_id: tripId }
             }
-            return { is_matched: false, trip_id: trip.id }
+            return { is_matched: false, trip_id: tripId }
         } catch (error) {
             throw error;
         }
