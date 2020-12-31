@@ -2,9 +2,7 @@ import Route from '@ioc:Adonis/Core/Route';
 import test from 'japa';
 import supertest from 'supertest';
 import Database from '@ioc:Adonis/Lucid/Database';
-import { login } from '../helpers';
-import { nanoid } from 'nanoid';
-import User from 'App/Models/User';
+import { login, createDriverWithVehicle } from '../helpers';
 import Vehicle from 'App/Models/Vehicle';
 
 
@@ -12,28 +10,14 @@ const BASE_URL = `http://${process.env.HOST}:${process.env.PORT}`;
 
 
 test.group('Drivers controller tests', (group) => {
-    let user;
     let token;
     let vehicle: Vehicle;
     group.before(async () => {
         await Database.beginGlobalTransaction();
-        //Create new user
-        const email = nanoid() + '@gmail.com';
-        const password = nanoid();
-        const phoneNumber = nanoid()
-        user = new User();
-        user.email = email;
-        user.phoneNumber = phoneNumber;
-        user.password = password;
 
-        const driver = await user.related('driver').create({ verified: false, suspended: false, bvn: nanoid(), });
-        vehicle = new Vehicle();
-        vehicle.vehicleType = 'keke';
-        vehicle.modelNumber = nanoid();
-        vehicle.plateNumber = nanoid();
-        vehicle.driverId = driver.id;
-        await vehicle.save();
-        //Login in to get a token
+        const onlineDriver = await createDriverWithVehicle();
+        vehicle = onlineDriver.vehicle;
+        const { user: { email, phoneNumber }, password } = onlineDriver;
         token = await login({ email, phoneNumber, password });
     })
     group.after(async () => {

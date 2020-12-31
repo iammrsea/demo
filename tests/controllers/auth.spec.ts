@@ -2,7 +2,7 @@ import test from 'japa';
 import supertest from 'supertest';
 import Database from '@ioc:Adonis/Lucid/Database';
 import Route from '@ioc:Adonis/Core/Route';
-import UtilService from 'App/Services/UtilService';
+import { createRider } from '../helpers';
 
 const BASE_URL = `http://${process.env.HOST}:${process.env.PORT}`
 
@@ -15,7 +15,7 @@ test.group('authentication tests', (group) => {
     })
     test('user login', async (assert) => {
         //Create new user
-        const user = await UtilService.fakeRider();
+        const user = await createRider();
 
         const route = Route.makeUrl('login') as string;
         const { body } = await supertest(BASE_URL).post(route)

@@ -1,6 +1,7 @@
 import Driver from 'App/Models/Driver';
 import Rider from 'App/Models/Rider';
 import User from 'App/Models/User';
+import Vehicle from 'App/Models/Vehicle';
 import { nanoid } from 'nanoid';
 import supertest from 'supertest';
 
@@ -52,6 +53,25 @@ export const createDriver = async () => {
     const { role, email, driver: { id: driverId } } = user;
     return { email, role, driverId, password: 'password' };
 }
+export const createDriverWithVehicle = async () => {
+    //Create new user
+    const email = nanoid() + '@gmail.com';
+    const password = nanoid();
+    const phoneNumber = nanoid()
+    const user = new User();
+    user.email = email;
+    user.phoneNumber = phoneNumber;
+    user.password = password;
+
+    const driver = await user.related('driver').create({ verified: false, suspended: false, bvn: nanoid(), });
+    const vehicle = new Vehicle();
+    vehicle.vehicleType = 'keke';
+    vehicle.modelNumber = nanoid();
+    vehicle.plateNumber = nanoid();
+    vehicle.driverId = driver.id;
+    await vehicle.save();
+    return { user, vehicle, password };
+}
 export const createAdmin = async () => {
     const user = new User();
     user.email = nanoid() + '@gmail.com';
@@ -61,3 +81,6 @@ export const createAdmin = async () => {
     await user.save();
     return { email: user.email, role: user.role, password: 'password' };
 }
+
+export const NOTIFICATION_TOKEN = `fFF4pbP2bOrou5YeEM242B:APA91bHDpU_G1aO5nN0anrDTcDIESb_9-IUns9v_JAnq_1WETSiiOZMeHqXWtyK1WzF9xbuqF1pZRbFFRPD0YC73XkVPbJvIH3hSiPU_nKzntrG728zrv59LkEF7TO3ou048xETFITQl`
+export const MOBILE_TOKEN = `fFF4pbP2bOrou5YeEM242B:APA91bHDpU_G1aO5nN0anrDTcDIESb_9-IUns9v_JAnq_1WETSiiOZMeHqXWtyK1WzF9xbuqF1pZRbFFRPD0YC73XkVPbJvIH3hSiPU_nKzntrG728zrv59LkEF7TO3ou048xETFITQl`

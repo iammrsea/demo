@@ -26,6 +26,21 @@ Route.get("health", async ({ response }: HttpContextContract) => {
     throw error
   }
 });
+
+// Route.post('api/v1/notify', async ({ request }) => {
+//   const { token, data } = request.all();
+//   const message = { token, data };
+//   console.log('payload', { token, data });
+//   try {
+//     const res = await NotificationService.notifyUser(message);
+//     console.log('res', res);
+//     return res;
+//   } catch (e) {
+//     console.log('error', e.message);
+//     return { is_success: false };
+//   }
+
+// })
 // Route.get('/', async ({ view }) => {
 //   return view.render('welcome')
 // })

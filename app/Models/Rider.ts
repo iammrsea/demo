@@ -4,6 +4,7 @@ import ProfileImage from './ProfileImage';
 import User from './User';
 import Wallet from './Wallet';
 import Message from './Message';
+import Token from './Token';
 
 export default class Rider extends BaseModel {
   @column({ isPrimary: true })
@@ -38,6 +39,9 @@ export default class Rider extends BaseModel {
 
   @hasOne(() => Wallet)
   public wallet: HasOne<typeof Wallet>;
+
+  @hasOne(() => Token)
+  public token: HasOne<typeof Token>;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

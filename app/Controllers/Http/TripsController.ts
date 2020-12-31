@@ -67,6 +67,7 @@ export default class TripsController {
             trip.useTransaction(trx);
             const savedTrip = await trip.related('status').create({ status: 'pending' });
 
+            console.log('savedTrip', savedTrip.toJSON())
             //Create and save geolocation
             const geoLoc = new TripGeolocation();
             geoLoc.fromLatitude = geolocation.fromLocation.latitude;
@@ -110,9 +111,9 @@ export default class TripsController {
                 console.log('trip', UtilService.toSnakeCase(serializedTrip));
                 //Notifiy matched driver
                 Event.emit('trip:driver:matched', serializedTrip);
-                return { isMatched: true }
+                return { is_matched: true, trip_id: trip.id }
             }
-            return { isMatched: false }
+            return { is_matched: false, trip_id: trip.id }
         } catch (error) {
             throw error;
         }
